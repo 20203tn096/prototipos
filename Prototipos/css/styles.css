@@ -1,0 +1,11 @@
+.panel-header{
+    background-color:  #345177 !important;
+    border-color:  #345177 !important;
+    color: #fff;
+    
+}
+
+.panel-title{
+    color: #fff;
+    font-size: 25;
+}
