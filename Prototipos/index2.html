@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" ng-app="prueba">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Sortable - Default functionality</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css" rel="stylesheet">
+    <script src="//code.jquery.com/jquery-1.11.1.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+</head>
+
+<body ng-controller="controlador">
+
+
+
+    <table border="1">
+        <thead>
+            <tr>
+                <td>position</td>
+                <td>description</td>
+            </tr>
+
+        </thead>
+        <tbody id="sortable" class="ui-sortable">
+
+            <tr class="ui-state-default" id="11" data="row-1">
+                <td>1</td>
+                <td>11</td>
+            </tr>
+            <tr class="ui-state-default" id="22" data="row-2">
+                <td>2</td>
+                <td>22</td>
+            </tr>
+            <tr class="ui-state-default" id="33" data="row-3">
+                <td>3</td>
+                <td>33</td>
+            </tr>
+            <tr class="ui-state-default" id="44" data="row-4">
+                <td>4</td>
+                <td>44</td>
+            </tr>
+        </tbody>
+
+
+    </table>
+
+
+    <button ng-click="ver()">Revisar</button>
+    <script>
+        let miAplicacion = angular.module("prueba", [])
+        let controlador = miAplicacion.controller("controlador", ["$scope", ($scope) => {
+            $(function () {
+                $("#sortable").sortable({
+
+                    start: function (event, ui) {
+
+                        //console.log('start');
+
+                        // console.log('start ==');
+                        // console.log(ui.item[0].id);
+                    },
+                    change: function (event, ui) {
+
+                        // console.log('change ==');
+                        // console.log(ui.item[0].id);
+                        //	console.log(ui.item.prev()[0].id);
+
+                    },
+                    update: function (event, ui) {
+
+                        //  console.log('update');
+
+                        // console.log(ui.item[0].id);
+
+                        //  console.log('update ==');
+                        // console.log(ui.item[0].id);
+                    },
+
+                    over: function (event, ui) {
+
+                        // console.log('update');
+                        console.log('over moved :: ' + ui.item[0].id);
+                        // console.log(ui);
+                    }
+
+                    ,
+
+                    out: function (event, ui) {
+
+                        //   console.log('out ==');
+                        //    console.log(ui.item[0].id);
+                        // console.log(ui);
+                    },
+                    stop: function (event, ui) {
+
+                        // repobj = 0;
+                        console.log('stop moved');
+                        console.log(ui.item[0].id);
+
+
+                        console.log(ui.item.prev()[0].id);
+
+                    }
+                });
+
+
+
+
+                $("#sortable").disableSelection();
+            });
+
+
+        }])
+
+    </script>
+
+</body>
+
+</html>

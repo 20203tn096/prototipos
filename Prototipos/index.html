@@ -1,136 +1,310 @@
 <!DOCTYPE html>
-<html ng-app="enes" lang="en" >
+<html ng-app="enes" lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/styles.css">
+
+
     <title>Inicio</title>
-    
+
 </head>
+
 <body ng-controller="encuesta">
 
-    <nav class="navbar navbar-default" style="background-color: #345177;">
-        <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#" style="color:#fff; font-weight: 400;">Sistema Integral de Servicios Académicos | SISA</a>
-          </div>
-      
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-           
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="#" style="color:#fff;">Salir</a></li>
-            </ul>
-          </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+    <div ng-include="'./plantillas/sidebar.html'"></div>
 
-    <div class="container-fluid"  >
+    <div class="container-fluid">
+
         <div class="panel panel-default ">
             <!-- Default panel contents -->
             <div class="panel-heading panel-header">
                 <span class="panel-title">Gestión de Encuestas</span>
             </div>
             <div class="panel-body">
-                <div class="row">
-                    <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 40px; margin-top: 15px;">
-                      
-                            <input type="text" class=" form-control"  placeholder="Buscar...">
 
-                    </div>
-                    <div class="col-md-12">
-                        <div class="table table-responsive">
-                            <table class="table table-striped table-bordered table-condensed table-hover" st-table="alumnosTabla"
-                                   st-safe-src="listaAlumnos">
-                                <thead>
-                                <tr>
-                                    <th  style="vertical-align: middle;" class="text-center">#</th>
-                                    <th class="text-center" st-sort="matricula">Matrícula</th>
-                                    <th class="text-center" st-sort="alumno">Alumno</th>
-                                    <th class="text-center" st-sort="empresa">Empresa de Estadia</th>
-                                    <th class="text-center" st-sort="asesor">Asesor</th>
-                                    <th class="text-center" st-sort="estadoAlumno">Estado alumno</th>
-                                    <th  style="vertical-align: middle; padding-left: 15px; padding-right: 15px;" class="text-center">Acciones</th>
-                                    <th  style="vertical-align: middle; padding-left: 15px; padding-right: 15px;" class="text-center"><input style="width: 17px; height: 17px; margin-top: 7px" type="checkbox" id="checkAll" ng-model='checados' ng-click="checarTodos()" value="option1" aria-label="..."></th>
-                                </tr>
-                                
-                                </thead>
-                                <tbody>
-                                <tr ng-repeat="alumno in alumnosTabla">
-                                    <td ng-bind="((currentPage - 1) * registroPorPagina) + $index + 1"
-                                        class="text-center"></td>
-                                    <td class="text-center">
-                                        {{ alumno.matriculaAlumno}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ alumno.nombreAlumno}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ alumno.nombreEmpresa}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ alumno.nombreAsesor}}
-                                    </td>
-                                    <td class="text-center">
-                                        {{ alumno.estadoAlumno}}
-                                    </td>
-                                    <td class="text-center">
-                                        <button class="text-center btn btn-warning" ng-click="setModificarAlumno(alumno)"><i class="fa fa-pencil" ></i></button>
-                                    </td>
-                                    <td class="text-center" >
-                                        <input ng-model="alumno.select"
-                                               ng-click="seleccionarAlumno()" type="checkbox">
-                
-                                    </td>
-                                </tr>
-                                </tbody>
-                                <tfoot ng-if="listaAlumnos.length === 0 && carreraSeleccionada === false">
-                                <tr class="text-center">
-                                    <td colspan="11">
-                                        <h5>No se encontraron alumnos en el sistema.</h5>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                                <tfoot ng-if="carreraSeleccionada === true">
-                                <tr class="text-center">
-                                    <td colspan="11">
-                                        <h5>Para ver a los alumnos en estadía y generar su reporte de asignación y aceptación de estadía, seleccione los campos requeridos de la parte superior.</h5>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                                <tfoot ng-if="listaAlumnos.length >= 9" style="cursor:pointer;">
-                                <tr>
-                                    <td colspan="6" class="text-center">
-                                        <div st-pagination="" st-page-change="rembemberCurrentPage(newPage)"
-                                             st-items-by-page="registroPorPagina"
-                                             st-displayed-pages="10"></div>
-                                    </td>
-                                </tr>
-                                </tfoot>
-                            </table>
+                <div id="exTab2">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#1" data-toggle="tab">Encuestas</a>
+                        </li>
+                        <li><a href="#2" id="tabRegistro" data-toggle="tab">Registro</a>
+                        </li>
+                        <li><a href="#3" id="tabModificar" data-toggle="tab" ng-show="visible">Modificar</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content" style="margin-top: 20px;">
+                        <div class="tab-pane active" id="1" ng-include="'./plantillas/Modules/Encuesta/encuesta.html'">
+
+                        </div>
+
+                        <div class="tab-pane  " id="2" >
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Nombre:<span class="obligatorio">
+                                                    *</span></label>
+                                            <input type="text" ng-model="encuesta.nombre" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
+                                            </label>
+                                            <textarea class="form-control" ng-model="encuesta.descripcion"
+                                                style="resize: none;overflow-y: scroll; height: auto;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Periodo de estadía:<span class="obligatorio">
+                                                    *</span></label>
+                                            <select ng-options="item as item.label for item in periodos track by item.id"
+                                                ng-model="encuesta.periodo" class="form-control">
+                                                <option value="">Selecciona una opcion...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <label class="label-form"> Asignación de secciones</label>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label class="sublabel-form"> Secciones:</label>
+                                    <div class="table table-responsive">
+                                        <table  class="table table-striped table-bordered table-condensed table-hover"
+                                            st-table="alumnosTabla" st-safe-src="listaEncuestas"  style="border: 0px !important;">
+                                            <thead class="table-head-2">
+                                                <tr>
+                                                    <th rowspan="2" style="vertical-align: middle;" class="text-center">
+                                                        #</th>
+                                                    <th class="text-center" st-sort="matricula">Nombre</th>
+                                                    <th rowspan="2"
+                                                        style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                                                        class="text-center">Asignar</th>
+                                                </tr>
+                                                <tr>
+                            
+                                                    <th><input ng-model="buscarNombre" placeholder="Buscar..."
+                                                            class="input-sm form-control" type="search"
+                                                            id="busquedaMatricula" /></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  >
+                                                <tr ng-repeat="seccion in secciones  | filter: buscarNombre " style="border: 0px !important;" >
+                                                    <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
+                              
+                                                    </td>
+                                                    <td   ng-class="  seccion.estado == 0 ? 'disable-seccion text-start table-td' : 'text-start table-td' ">
+                                                        {{seccion.nombre}}
+                                                    </td>
+                                                    <td class="text-center table-td" ng-if="seccion.estado == 0">
+                                                        
+                                                        <button class="btn " style="background-color: #b2b9ba" disabled> > </button>
+                                                    </td>
+                                                    <td class="text-center table-td" ng-if="seccion.estado == 1" >
+                                                        
+                                                        <button class="btn btn-success " ng-click="agregar(seccion)"> > </button>
+                                                    </td>
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                            
+                            
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="sublabel-form"> Secciones asignadas:</label>
+                                    <div class="table table-responsive">
+                                        <table class="table table-striped table-bordered table-condensed table-hover"
+                                            st-table="alumnosTabla" st-safe-src="listaEncuestas">
+                                            <thead class="table-head-2">
+                                                <tr>
+                                                    <th rowspan="2"
+                                                        style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                                                        class="text-center">Remover</th>
+                                                    <th rowspan="2" style="vertical-align: middle;" class="text-center">
+                                                        #</th>
+                                                    <th class="text-center" st-sort="matricula">Nombre</th>
+                                                </tr>
+                                                <tr>
+                            
+                                                    <th><input st-search="matriculaAlumno" placeholder="Buscar..."
+                                                            class="input-sm form-control" type="search"
+                                                            id="busquedaMatricula" /></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="sortable" class="ui-sortable">
+                                                <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " >
+                                                    <td class="text-center" > 
+                                                        <button class="btn btn-danger table-td" ng-click="remover(asignada)"> < </button>
+                                                    </td>
+                                                    <td ng-bind="$index + 1" class="text-center table-td">
+                                                    </td>
+                                                    <td class="text-start table-td" >
+                                                        {{asignada.nombre}}
+                                                    </td>
+                                                   
+                                                   
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="3" >
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Nombre:<span class="obligatorio">
+                                                    *</span></label>
+                                            <input type="text" ng-model="modificarEncuesta.nombre" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
+                                            </label>
+                                            <textarea class="form-control" ng-model="modificarEncuesta.descripcion"
+                                                style="resize: none;overflow-y: scroll; height: auto;"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div>
+                                            <label class="label-form"> Periodo de estadía:<span class="obligatorio">
+                                                    *</span></label>
+                                            <select ng-options="item as item.label for item in periodos track by item.id"
+                                                ng-model="modificarEncuesta.periodo" class="form-control">
+                                                <option value="">Selecciona una opcion...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            </div>
+                            <label class="label-form"> Asignación de secciones</label>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <label class="sublabel-form"> Secciones:</label>
+                                    <div class="table table-responsive">
+                                        <table  class="table table-striped table-bordered table-condensed table-hover"
+                                            st-table="alumnosTabla" st-safe-src="listaEncuestas"  style="border: 0px !important;">
+                                            <thead class="table-head-2">
+                                                <tr>
+                                                    <th rowspan="2" style="vertical-align: middle;" class="text-center">
+                                                        #</th>
+                                                    <th class="text-center" st-sort="matricula">Nombre</th>
+                                                    <th rowspan="2"
+                                                        style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                                                        class="text-center">Asignar</th>
+                                                </tr>
+                                                <tr>
+                            
+                                                    <th><input ng-model="buscarNombre" placeholder="Buscar..."
+                                                            class="input-sm form-control" type="search"
+                                                            id="busquedaMatricula" /></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody  >
+                                                <tr ng-repeat="seccion in secciones  | filter: buscarNombre " style="border: 0px !important;" >
+                                                    <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
+                              
+                                                    </td>
+                                                    <td   ng-class="  seccion.estado == 0 ? 'disable-seccion text-start table-td' : 'text-start table-td' ">
+                                                        {{seccion.nombre}}
+                                                    </td>
+                                                    <td class="text-center table-td" ng-if="seccion.estado == 0">
+                                                        
+                                                        <button class="btn " style="background-color: #b2b9ba" disabled> > </button>
+                                                    </td>
+                                                    <td class="text-center table-td" ng-if="seccion.estado == 1" >
+                                                        
+                                                        <button class="btn btn-success " ng-click="agregar(seccion)"> > </button>
+                                                    </td>
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                            
+                            
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label class="sublabel-form"> Secciones asignadas:</label>
+                                    <div class="table table-responsive">
+                                        <table class="table table-striped table-bordered table-condensed table-hover"
+                                            st-table="alumnosTabla" st-safe-src="listaEncuestas">
+                                            <thead class="table-head-2">
+                                                <tr>
+                                                    <th rowspan="2"
+                                                        style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                                                        class="text-center">Remover</th>
+                                                    <th rowspan="2" style="vertical-align: middle;" class="text-center">
+                                                        #</th>
+                                                    <th class="text-center" st-sort="matricula">Nombre</th>
+                                                </tr>
+                                                <tr>
+                            
+                                                    <th><input st-search="matriculaAlumno" placeholder="Buscar..."
+                                                            class="input-sm form-control" type="search"
+                                                            id="busquedaMatricula" /></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="modificarSortable" class="ui-sortable">
+                                                <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " >
+                                                    <td class="text-center" > 
+                                                        <button class="btn btn-danger table-td" ng-click="remover(asignada)"> < </button>
+                                                    </td>
+                                                    <td ng-bind="$index + 1" class="text-center table-td">
+                                                    </td>
+                                                    <td class="text-start table-td" >
+                                                        {{asignada.nombre}}
+                                                    </td>
+                                                   
+                                                   
+                                                </tr>
+                                               
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-          </div>
-    
+            </div>
+            
+        </div>
+        
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     <script src="./js/angular.js"></script>
-    <script src="./js/smart-table.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
     <script src="./app.js"></script>
     <script src="./js/modules/encuesta/encuesta.js"></script>
+    <script>
+        feather.replace()
+    </script>
+    <script src="./js/smart-table.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+   
+    
 
 </body>
 
