@@ -1,1 +1,1 @@
-const app = angular.module('enes', ['smart-table','ui.sortable']);
+const app = angular.module('enes', ['smart-table','ui.sortable', ]);

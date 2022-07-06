@@ -52,27 +52,60 @@
     background-color: #009675;
     border-color: #009675;
   }
+  .btn-utez-success:hover {
+    color: #009675;
+    background-color: #fff;
+    border-color: #009675;
+  }
 
 .btn-utez-danger {
     color: #fff;
     background-color: #d9534f;
     border-color: #d9534f;
 }
-
+.btn-utez-danger:hover {
+    color: #d9534f;
+    background-color: #fff;
+    border-color: #d9534f;
+}
 .btn-utez-warning {
     color: #fff;
     background-color: #eea955;
     border-color: #eea955;
 }
-
+.btn-utez-warning:hover {
+    color: #eea955;
+    background-color: #fff;
+    border-color: #eea955;
+}
 .btn-utez-info {
     color: #fff;
     background-color: #345177;
     border-color: #345177;
 }
-
+.btn-utez-info:hover {
+    color: #345177;
+    background-color: #fff;
+    border-color: #345177;
+}
 .btn-utez-secondary {
     color: #fff;
     background-color: #b2b9ba;
     border-color: #b2b9ba;
+}
+.sortable:hover{
+    cursor: pointer;
+    color: #437dc9;
+}
+
+.badge-utez-success {
+    color: #fff;
+    background-color: #037059;
+    border-color: #037059;
+  }
+
+.badge-utez-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
 }

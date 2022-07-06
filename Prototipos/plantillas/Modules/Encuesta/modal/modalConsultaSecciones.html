@@ -1,0 +1,33 @@
+<div class="modal fade" id="modalSecciones" tabindex="-1" role="dialog">
+    <div class="modal-dialog " role="document" >
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Secciones asignadas</h4>
+        </div>
+        <div class="modal-body">
+         <div class="table table-responsive">
+            <table class="table" style="border-color: blue;">
+              <thead class="table-head">
+                <tr>
+                  <td class="text-start">#</td>
+                  <td class="text-start">Sección</td>
+                </tr>
+              </thead>
+              <tbody>
+               
+                <tr ng-repeat="seccion in consultaSeccionesAsignadas">
+                  <td class="text-start" ng-bind="$index+1"></td>
+                  <td class="text-start" ng-bind="seccion.nombre"></td>
+                </tr>
+
+              </tbody>
+            </table>
+         </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal style="margin-top: 15%;"-->
