@@ -98,7 +98,7 @@
                                                             id="busquedaMatricula" /></th>
                                                 </tr>
                                             </thead>
-                                            <tbody  >
+                                            <tbody>
                                                 <tr ng-repeat="seccion in secciones  | filter: buscarNombre " style="border: 0px !important;" >
                                                     <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
                               
@@ -112,7 +112,7 @@
                                                     </td>
                                                     <td class="text-center table-td" ng-if="seccion.estado == 1" >
                                                         
-                                                        <button class="btn btn-success " ng-click="agregar(seccion)"> > </button>
+                                                        <button class="btn btn-utez-success " ng-click="agregar(seccion)"> > </button>
                                                     </td>
                                                 </tr>
                                                
@@ -144,10 +144,10 @@
                                                             id="busquedaMatricula" /></th>
                                                 </tr>
                                             </thead>
-                                            <tbody id="sortable" class="ui-sortable">
+                                            <tbody ui-sortable="sortableOptions" ng-model="asignadas">
                                                 <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " >
                                                     <td class="text-center" > 
-                                                        <button class="btn btn-danger table-td" ng-click="remover(asignada)"> < </button>
+                                                        <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)"> < </button>
                                                     </td>
                                                     <td ng-bind="$index + 1" class="text-center table-td">
                                                     </td>
@@ -162,6 +162,11 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
+      
+                                    <button class="btn btn-utez-success" ng-click="save()">Registrar</button>
+                            
+                            </div>
                             </div>
                         </div>
 
@@ -233,7 +238,7 @@
                                                     </td>
                                                     <td class="text-center table-td" ng-if="seccion.estado == 1" >
                                                         
-                                                        <button class="btn btn-success " ng-click="agregar(seccion)"> > </button>
+                                                        <button class="btn btn-utez-success " ng-click="agregar(seccion)"> > </button>
                                                     </td>
                                                 </tr>
                                                
@@ -268,7 +273,7 @@
                                             <tbody id="modificarSortable" class="ui-sortable">
                                                 <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " >
                                                     <td class="text-center" > 
-                                                        <button class="btn btn-danger table-td" ng-click="remover(asignada)"> < </button>
+                                                        <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)"> < </button>
                                                     </td>
                                                     <td ng-bind="$index + 1" class="text-center table-td">
                                                     </td>
@@ -283,6 +288,11 @@
                                         </table>
                                     </div>
                                 </div>
+                                <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
+      
+                                    <button class="btn btn-utez-success" >Guardar</button>
+                            
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -296,6 +306,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     <script src="./js/angular.js"></script>
+    <script src="./js/angular-sortable.js"></script>
     <script src="./app.js"></script>
     <script src="./js/modules/encuesta/encuesta.js"></script>
     <script>

@@ -1,227 +1,222 @@
-app.controller('encuesta', ['$scope', '$http', '$window', function ($scope, $http, $window){
-    $scope.items = [
-        {
+app.controller("encuesta", [
+  "$scope",
+  "$http",
+  "$window",
+  function ($scope, $http, $window) {
+    $scope.periodos = [
+      {
         id: 1,
-        label: 'ENERO-ABRIL | 2022 INGENIERIAS',
-       },
-       {
-        id: 1,
-        label: 'ENERO-ABRIL | 2022 TSU',
-       },
-       {
-        id: 1,
-        label: 'ENERO-ABRIL | 2021 INGENIERIAS',
-       }
-    ]
-    $scope.visible = false;
-    $scope.listaEncuestas=[
-        {
-            nombre: "Encuesta 1",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2022 INGENIERIAS",
-            periodo:  {
-                id: 1,
-                label: "ENERO-ABRIL | 2022 INGENIERIAS"
-            },
-            Estado: 1
+        label: "ENERO-ABRIL | 2022 INGENIERIAS",
+      },
+      {
+        id: 2,
+        label: "ENERO-ABRIL | 2022 TSU",
+      },
+      {
+        id: 3,
+        label: "ENERO-ABRIL | 2021 INGENIERIAS",
+      },
+      {
+        id: 4,
+        label: "ENERO-ABRIL | 2021 TSU",
+      },
+      {
+        id: 5,
+        label: "ENERO-ABRIL | 2020 INGENIERIAS",
+      },
+      {
+        id: 6,
+        label: "ENERO-ABRIL | 2019 INGENIERIAS",
+      },
+      {
+        id: 7,
+        label: "ENERO-ABRIL | 2019 TSU",
+      },
+    ];
+
+    $scope.listaEncuestas = [
+      {
+        nombre: "Encuesta 1",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2022 INGENIERIAS",
+        periodo: {
+          id: 1,
+          label: "ENERO-ABRIL | 2022 INGENIERIAS",
         },
-        {
-            nombre: "Encuesta 2",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2022 TSU",
-            periodo: {
-                id: 2,
-                label: "ENERO-ABRIL | 2022 TSU"
-            },
-            Estado: 1
+        Estado: 1,
+      },
+      {
+        nombre: "Encuesta 2",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2022 TSU",
+        periodo: {
+          id: 2,
+          label: "ENERO-ABRIL | 2022 TSU",
         },
-        {
-            nombre: "Encuesta 3",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2021 INGENIERIAS",
-            periodo: {
-                id: 3,
-                label: "ENERO-ABRIL | 2021 INGENIERIAS"
-            },
-            Estado: 1
+        Estado: 1,
+      },
+      {
+        nombre: "Encuesta 3",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2021 INGENIERIAS",
+        periodo: {
+          id: 3,
+          label: "ENERO-ABRIL | 2021 INGENIERIAS",
         },
-        {
-            nombre: "Encuesta 4",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2021 TSU",
-            periodo: {
-                id: 4,
-                label: "ENERO-ABRIL | 2021 TSU"
-            },
-            Estado: 1
+        Estado: 1,
+      },
+      {
+        nombre: "Encuesta 4",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2021 TSU",
+        periodo: {
+          id: 4,
+          label: "ENERO-ABRIL | 2021 TSU",
         },
-        {
-            nombre: "Encuesta 5",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2020 INGENIERIAS",
-            periodo:{
-                id: 5,
-                label: "ENERO-ABRIL | 2020 INGENIERIAS"
-            },
-            Estado: 1
+        Estado: 1,
+      },
+      {
+        nombre: "Encuesta 5",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2020 INGENIERIAS",
+        periodo: {
+          id: 5,
+          label: "ENERO-ABRIL | 2020 INGENIERIAS",
         },
-        {
-            nombre: "Encuesta 6",
-            descripcion: "Encuesta para periodo de ENERO-ABRIL | 2020 TSU",
-            periodo: {
-                id: 6,
-                label: "ENERO-ABRIL | 2019 INGENIERIAS"
-            },
-            Estado: 0
+        Estado: 1,
+      },
+      {
+        nombre: "Encuesta 6",
+        descripcion: "Encuesta para periodo de ENERO-ABRIL | 2020 TSU",
+        periodo: {
+          id: 6,
+          label: "ENERO-ABRIL | 2019 INGENIERIAS",
         },
-        {
-            nombre: "Encuesta 7",
-            periodo:  {
-                id: 7,
-                label: "ENERO-ABRIL | 2019 TSU"
-            },
-            Estado: 0
+        Estado: 0,
+      },
+      {
+        nombre: "Encuesta 7",
+        periodo: {
+          id: 7,
+          label: "ENERO-ABRIL | 2019 TSU",
         },
-        {
-            nombre: "Encuesta 8",
-            periodo:  {
-                id: 7,
-                label: "ENERO-ABRIL | 2019 TSU"
-            },
-            Estado: 0
-        }
-    ]
-    $scope.asignadas =[]
+        Estado: 0,
+      },
+      {
+        nombre: "Encuesta 8",
+        periodo: {
+          id: 7,
+          label: "ENERO-ABRIL | 2019 TSU",
+        },
+        Estado: 0,
+      },
+    ];
+
     $scope.secciones = [
-        {
-            id: 1,
-            nombre: "Asesor",
-            estado: 1 
-        },
-        {
-            id: 1,
-            nombre: "Departamento de estadía",
-            estado: 1 
-        },
-        {
-            id: 1,
-            nombre: "Empresa",
-            estado: 0 
-        }
-    ]
+      {
+        id: 1,
+        nombre: "Asesor 2022",
+        estado: 1,
+        order: 0,
+      },
+      {
+        id: 2,
+        nombre: "Departamento de estadía 2022",
+        estado: 1,
+        order: 1,
+      },
+      {
+        id: 3,
+        nombre: "Asesor 2020",
+        estado: 0,
+        order: 2,
+      },
+      {
+        id: 4,
+        nombre: "Empresa 2020",
+        estado: 0,
+        order: 3,
+      },
+      {
+        id: 5,
+        nombre: "Empresa 2022",
+        estado: 1,
+        order: 4,
+      },
+    ];
+    $scope.asignadas = [];
+    $scope.items = [
+      {
+        id: 1,
+        label: "ENERO-ABRIL | 2022 INGENIERIAS",
+      },
+      {
+        id: 2,
+        label: "ENERO-ABRIL | 2022 TSU",
+      },
+      {
+        id: 3,
+        label: "ENERO-ABRIL | 2021 INGENIERIAS",
+      },
+    ];
 
-    $scope.periodos=[
-        {
-            id: 1,
-            label: "ENERO-ABRIL | 2022 INGENIERIAS"
-        },
-        {
-            id: 2,
-            label: "ENERO-ABRIL | 2022 TSU"
-        },
-        {
-            id: 3,
-            label: "ENERO-ABRIL | 2021 INGENIERIAS"
-        },
-        {
-            id: 4,
-            label: "ENERO-ABRIL | 2021 TSU"
-        },
-        {
-            id: 5,
-            label: "ENERO-ABRIL | 2020 INGENIERIAS"
-        },
-        {
-            id: 6,
-            label: "ENERO-ABRIL | 2019 INGENIERIAS"
-        },
-        {
-            id: 7,
-            label: "ENERO-ABRIL | 2019 TSU"
-        },
-    ]
+    $scope.visible = false;
 
+    $scope.encuesta = {};
 
-    $scope.prueba = () =>{
-        console.log("Hola");
-    }
-    $scope.setModificarEncuesta = (encuesta) =>{
-        console.log(encuesta);
-        $scope.modificarEncuesta = angular.copy(encuesta);
-        console.log($scope.modificarEncuesta);
-        $scope.visible = true;
-        setTimeout(function () {
-            $("#tabModificar").click();
-        }, 100);
-       
-    }
-    $scope.agregar = (seccion) =>{
-        console.log("agregar");
-        $scope.asignadas.push(seccion)
-        $scope.secciones.splice($scope.secciones.indexOf(seccion), 1)
+    $scope.sortingLog = [];
 
-    }
-    $scope.remover = (seccion) =>{
-        console.log("Hola");
-        $scope.secciones.push(seccion)
-        $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1)
+    $scope.sortableOptions = {
+      beforeStop: function () {
+        console.log("beforeStop");
+      },
+      change: function () {
+        console.log("change");
+      },
+      start: function (e, ui) {},
+      update: function (e, ui) {
+        console.log("update");
+      },
+      stop: function (e, ui) {
+        let index = ui.item.index();
+        console.log("stop", index);
+        $scope.asignadas[index].order = index;
+      },
+    };
 
-    }
-
-    $(function () {
-        $("#sortable").sortable({
-            start: function (event, ui) {
-                ui.item.startPos = ui.item.index();
-            },
-            stop: function (event, ui) {
-                console.log("Start position: " + ui.item.startPos);
-                console.log("New position: " + ui.item.index());
-                arreglar(ui.item.startPos, ui.item.index())
-                console.log($scope.asignadas);
-            },
-            
-        });
-    });
-    $(function () {
-        $("#modificarSortable").sortable({
-            start: function (event, ui) {
-                ui.item.startPos = ui.item.index();
-            },
-            stop: function (event, ui) {
-                console.log("Start position: " + ui.item.startPos);
-                console.log("New position: " + ui.item.index());
-                arreglar(ui.item.startPos, ui.item.index())
-                console.log($scope.asignadas);
-            },
-            
-        });
-    });
-    const arreglar = (posInicial, posFinal) => {
-        let temp;
-        let ciclos = diferencia(posInicial, posFinal);
-        let temOriginal = $scope.asignadas[posInicial];
-
-        if (posInicial < posFinal) {
-            for (let i = 0; i < ciclos; i++) {
-                temp = $scope.asignadas[posInicial + 1];
-                $scope.asignadas[posInicial] = temp;
-                $scope.asignadas[posInicial + 1] = temOriginal;
-                posInicial++;
-            }
-        } else {
-            for (let i = 0; i < ciclos; i++) {
-                temp = $scope.asignadas[posInicial - 1];
-                $scope.asignadas[posInicial] = temp;
-                $scope.asignadas[posInicial - 1] = temOriginal;
-                posInicial--;
-            }
-        }
-    }
-
-    const diferencia = (num1, num2) => {
-        let numMayor, numMenor;
-        if (num1 > num2) {
-            numMayor = num1;
-            numMenor = num2;
-        } else {
-            numMayor = num2;
-            numMenor = num1;
-        }
-        return numMayor - numMenor;
-    }
-}])
+    $scope.save = () => {
+      let list = $scope.asignadas.map((item, i) => ({
+        seccion: item,
+        order: i,
+        encuesta: { id: 1 },
+      }));
+      const encuesta_secciones = angular.copy(list);
+      console.log(encuesta_secciones);
+    };
+    $scope.setModificarEncuesta = (encuesta) => {
+      console.log(encuesta);
+      $scope.modificarEncuesta = angular.copy(encuesta);
+      console.log($scope.modificarEncuesta);
+      $scope.visible = true;
+      setTimeout(function () {
+        $("#tabModificar").click();
+      }, 100);
+    };
+    $scope.agregar = (seccion) => {
+      console.log("agregar");
+      $scope.asignadas.push(seccion);
+      $scope.secciones.splice($scope.secciones.indexOf(seccion), 1);
+    };
+    $scope.remover = (seccion) => {
+      console.log("removida");
+      $scope.secciones.push(seccion);
+      $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1);
+      console.log("Lista original", $scope.secciones);
+      console.log("Lista asignada", $scope.asignadas);
+    };
+    $scope.habilitarEncuesta = (encuesta) => {
+      console.log("Habilitar");
+      encuesta = { ...encuesta, estado: 1 };
+      console.log(encuesta);
+    };
+    $scope.deshabilitarEncuesta = (encuesta) => {
+      console.log("Deshabilitar");
+      encuesta = { ...encuesta, estado: 0 };
+    };
+  },
+]);

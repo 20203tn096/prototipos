@@ -47,3 +47,32 @@
     box-shadow: 0px 0px 9px 0px rgb(0 0 0 / 10%);
 }
 
+.btn-utez-success {
+    color: #fff;
+    background-color: #009675;
+    border-color: #009675;
+  }
+
+.btn-utez-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.btn-utez-warning {
+    color: #fff;
+    background-color: #eea955;
+    border-color: #eea955;
+}
+
+.btn-utez-info {
+    color: #fff;
+    background-color: #345177;
+    border-color: #345177;
+}
+
+.btn-utez-secondary {
+    color: #fff;
+    background-color: #b2b9ba;
+    border-color: #b2b9ba;
+}
