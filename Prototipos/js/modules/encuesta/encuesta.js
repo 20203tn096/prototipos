@@ -61,7 +61,7 @@ app.controller("encuesta", [
             nombre: "Asesor 2020",
             estado: 0,
             order: 2,
-          }
+          },
         ],
         Estado: 1,
       },
@@ -101,7 +101,7 @@ app.controller("encuesta", [
           id: 3,
           label: "ENERO-ABRIL | 2021 INGENIERIAS",
         },
-        secciones:[
+        secciones: [
           {
             id: 1,
             nombre: "Asesor 2022",
@@ -183,7 +183,7 @@ app.controller("encuesta", [
             nombre: "Departamento de estadía 2022",
             estado: 1,
             order: 1,
-          }
+          },
         ],
         Estado: 1,
       },
@@ -224,9 +224,7 @@ app.controller("encuesta", [
             nombre: "Empresa 2022",
             estado: 1,
             order: 4,
-          }
-          
-          
+          },
         ],
         Estado: 0,
       },
@@ -248,7 +246,7 @@ app.controller("encuesta", [
             nombre: "Departamento de estadía 2022",
             estado: 1,
             order: 1,
-          }
+          },
         ],
         Estado: 0,
       },
@@ -258,7 +256,7 @@ app.controller("encuesta", [
           id: 7,
           label: "ENERO-ABRIL | 2019 TSU",
         },
-        secciones:[
+        secciones: [
           {
             id: 1,
             nombre: "Asesor 2022",
@@ -270,12 +268,44 @@ app.controller("encuesta", [
             nombre: "Departamento de estadía 2022",
             estado: 1,
             order: 1,
-          }
+          },
         ],
         Estado: 0,
       },
     ];
     $scope.secciones = [
+      {
+        id: 1,
+        nombre: "Asesor 2022",
+        estado: 1,
+        order: 0,
+      },
+      {
+        id: 2,
+        nombre: "Departamento de estadía 2022",
+        estado: 1,
+        order: 1,
+      },
+      {
+        id: 3,
+        nombre: "Asesor 2020",
+        estado: 0,
+        order: 2,
+      },
+      {
+        id: 4,
+        nombre: "Empresa 2020",
+        estado: 0,
+        order: 3,
+      },
+      {
+        id: 5,
+        nombre: "Empresa 2022",
+        estado: 1,
+        order: 4,
+      },
+    ];
+    $scope.secciones2 = [
       {
         id: 1,
         nombre: "Asesor 2022",
@@ -323,11 +353,11 @@ app.controller("encuesta", [
         label: "ENERO-ABRIL | 2021 INGENIERIAS",
       },
     ];
-    $scope.bloqueoTab = true
+    $scope.listaModificar = [];
+    $scope.bloqueoTab = true;
     $scope.visible = false;
     $scope.encuesta = {};
-    $scope.listaRegistrar = angular.copy($scope.secciones)
-    $scope.listaModificar = angular.copy($scope.secciones)
+    $scope.listaRegistrar = angular.copy($scope.secciones);
     $scope.sortingLog = [];
 
     $scope.sortableOptions = {
@@ -354,61 +384,61 @@ app.controller("encuesta", [
       //   order: i,
       //   encuesta: { id: 1 },
       // }));
-      if ($scope.encuestaForm.$invalid) {
-        SweetAlert.swal({
-          title: "¡Advertencia!",
-          text: "No has hecho ningun cambio",
-          type: "warning",
-        })
-      } else {
-        SweetAlert.swal({
+
+      SweetAlert.swal(
+        {
           title: "¡Advertencia!",
           text: "¿Estas seguro de realizar los cambios?",
           type: "warning",
           showCancelButton: true,
           confirmButtonColor: "#DD6B55",
           confirmButtonText: "Aceptar",
-          closeOnConfirm: false}, 
-       function(isConfirm){ 
-         if(isConfirm){
-          const encuesta_secciones = angular.copy({...$scope.encuesta, secciones: $scope.asignadas, Estado: 1});
-          $scope.listaEncuestas = [encuesta_secciones, ...$scope.listaEncuestas]
-          setTimeout(function () {
-            $("#tabConsulta").click();
-          }, 100);
-          $scope.encuesta = {}
-          $scope.asignadas = []
-          $scope.listaRegistrar = angular.copy($scope.secciones)
-          SweetAlert.swal("Exitoso!", "La encuesta se ha registrado exitosamente", "success");
-         }else{
-          $scope.encuesta = {}
-          $scope.asignadas = []
-          $scope.listaRegistrar = angular.copy($scope.secciones)
-         }
-       });  
-      }
-
-           
+          closeOnConfirm: false,
+        },
+        function (isConfirm) {
+          if (isConfirm) {
+            const encuesta_secciones = angular.copy({
+              ...$scope.encuesta,
+              secciones: $scope.asignadas,
+              Estado: 1,
+            });
+            $scope.listaEncuestas = [
+              encuesta_secciones,
+              ...$scope.listaEncuestas,
+            ];
+            setTimeout(function () {
+              $("#tabConsulta").click();
+            }, 100);
+            $scope.encuesta = {};
+            $scope.asignadas = [];
+            $scope.listaRegistrar = angular.copy($scope.secciones);
+            SweetAlert.swal(
+              "Exitoso!",
+              "La encuesta se ha registrado exitosamente",
+              "success"
+            );
+          } else {
+            $scope.encuesta = {};
+            $scope.asignadas = [];
+            $scope.listaRegistrar = angular.copy($scope.secciones);
+          }
+        }
+      );
     };
+
     $scope.setModificarEncuesta = (encuesta) => {
       $scope.modificarEncuesta = angular.copy(encuesta);
-      $scope.listaModificar = angular.copy($scope.secciones);
-      const elementosAsignado = new Set($scope.modificarEncuesta.secciones)
-      console.log($scope.listaModificar.filter((item) =>{
-        return !elementosAsignado.has(item.id)
-      })); 
-      console.log("Lista original", $scope.listaModificar);
+      $scope.listaModificar = $scope.secciones.filter((item) => {
+        if (!$scope.modificarEncuesta.secciones.find((it) => it.id === item.id))
+          return true;
+      });
+      console.log("Secciones a modificar ", $scope.listaModificar);
       $scope.visible = true;
-      $scope.bloqueoTab = false
+      $scope.bloqueoTab = false;
       setTimeout(function () {
         $("#tabModificar").click();
       }, 100);
     };
-
-
-
-
-
 
     $scope.agregar = (seccion) => {
       console.log("agregar");
@@ -431,7 +461,10 @@ app.controller("encuesta", [
     $scope.removerModificar = (seccion) => {
       console.log("removida");
       $scope.listaModificar.push(seccion);
-      $scope.asignadasModificar.splice($scope.asignadasModificar.indexOf(seccion), 1);
+      $scope.asignadasModificar.splice(
+        $scope.asignadasModificar.indexOf(seccion),
+        1
+      );
       console.log("Lista original", $scope.listaModificar);
       console.log("Lista asignada", $scope.asignadasModificar);
     };
@@ -445,37 +478,32 @@ app.controller("encuesta", [
       console.log("Deshabilitar");
       encuesta = { ...encuesta, estado: 0 };
     };
-    $scope.modalConsultaSecciones = (secciones) =>{
-      $('#modalSecciones').modal('show')
+    $scope.modalConsultaSecciones = (secciones) => {
+      $("#modalSecciones").modal("show");
       $scope.consultaSeccionesAsignadas = secciones;
-    } 
-    $scope.cambioPeriodo = (e) =>{
-      if(e?.label){
-        $scope.encuesta.nombre="ENCUESTA " + e.label
-      }else{
-        $scope.encuesta.nombre="" 
-      }    
-    }
+    };
+    $scope.cambioPeriodo = (e) => {
+      if (e?.label) {
+        $scope.encuesta.nombre = "ENCUESTA " + e.label;
+      } else {
+        $scope.encuesta.nombre = "";
+      }
+    };
 
-    $scope.cambiarNombreEncuesta = (e) =>{
-      if(e?.label){
-        $scope.modificarEncuesta.nombre="ENCUESTA " + e.label
-      }else{
-        $scope.modificarEncuesta.nombre="" 
-      } 
-    }
+    $scope.cambiarNombreEncuesta = (e) => {
+      if (e?.label) {
+        $scope.modificarEncuesta.nombre = "ENCUESTA " + e.label;
+      } else {
+        $scope.modificarEncuesta.nombre = "";
+      }
+    };
 
-
-    $scope.cancelarModificacion = () =>{
-      $scope.bloqueoTab = true
-      $scope.visible = false
+    $scope.cancelarModificacion = () => {
+      $scope.bloqueoTab = true;
+      $scope.visible = false;
       setTimeout(function () {
         $("#tabConsulta").click();
       }, 100);
-    }
-
-    
-
-
+    };
   },
 ]);

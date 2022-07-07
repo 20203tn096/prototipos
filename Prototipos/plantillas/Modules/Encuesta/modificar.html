@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody  >
-                    <tr ng-repeat="seccion in secciones  | filter: buscarNombre " style="border: 0px !important;" >
+                    <tr ng-repeat="seccion in listaModificar  | filter: buscarNombre " style="border: 0px !important;" >
                         <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
   
                         </td>

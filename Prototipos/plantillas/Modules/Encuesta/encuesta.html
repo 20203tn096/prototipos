@@ -36,15 +36,15 @@
                         <td class="text-center" style="vertical-align: middle;">
                             <button class="text-center btn btn-utez-warning" ng-click="setModificarEncuesta(encuesta)"
                                 style=" margin-right: 20px;"> <i class="fa fa-pencil"></i></button>
-                            <button ng-show="encuesta.Estado == 0" ng-click="deshabilitarEncuesta(encuesta)"
+                            <button ng-if="encuesta.Estado == 0" ng-click="deshabilitarEncuesta(encuesta)"
                                 class="text-center btn btn-utez-danger" style=" margin-right: 20px;"> <i
                                     class="fa fa-times"></i></button>
-                            <button ng-show="encuesta.Estado == 1" ng-click="habilitarEncuesta(encuesta)"
+                            <button ng-if="encuesta.Estado == 1" ng-click="habilitarEncuesta(encuesta)"
                                 class="text-center btn btn-utez-success" style=" margin-right: 20px;"> <i
                                     class="fa fa-check"></i></button>
-                            <button ng-show="encuesta.Estado == 0" class="text-center btn btn-utez-info"
+                            <button ng-if="encuesta.Estado == 0" class="text-center btn btn-utez-info"
                                > <i class="fa fa-bar-chart"></i></button>
-                            <button ng-show="encuesta.Estado == 1" class="text-center btn btn-utez-secondary"
+                            <button ng-if="encuesta.Estado == 1" class="text-center btn btn-utez-secondary"
                                  disabled><i class="fa fa-bar-chart"  style="color:#345177"></i></button>
                         </td>
 
