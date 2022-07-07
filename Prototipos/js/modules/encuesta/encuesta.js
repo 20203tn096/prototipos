@@ -2,7 +2,8 @@ app.controller("encuesta", [
   "$scope",
   "$http",
   "$window",
-  function ($scope, $http, $window) {
+  "SweetAlert",
+  function ($scope, $http, $window, SweetAlert) {
     $scope.periodos = [
       {
         id: 1,
@@ -274,7 +275,6 @@ app.controller("encuesta", [
         Estado: 0,
       },
     ];
-
     $scope.secciones = [
       {
         id: 1,
@@ -308,6 +308,7 @@ app.controller("encuesta", [
       },
     ];
     $scope.asignadas = [];
+    $scope.asignadasModificar = [];
     $scope.items = [
       {
         id: 1,
@@ -324,9 +325,9 @@ app.controller("encuesta", [
     ];
     $scope.bloqueoTab = true
     $scope.visible = false;
-
     $scope.encuesta = {};
-
+    $scope.listaRegistrar = angular.copy($scope.secciones)
+    $scope.listaModificar = angular.copy($scope.secciones)
     $scope.sortingLog = [];
 
     $scope.sortableOptions = {
@@ -353,49 +354,88 @@ app.controller("encuesta", [
       //   order: i,
       //   encuesta: { id: 1 },
       // }));
-      Swal.fire({
-        title: 'Advertencia',
-        text: "¿Estas seguro de realizar los cambios?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#eea955',
-        cancelButtonColor: '#d9534f',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
+      if ($scope.encuestaForm.$invalid) {
+        SweetAlert.swal({
+          title: "¡Advertencia!",
+          text: "No has hecho ningun cambio",
+          type: "warning",
+        })
+      } else {
+        SweetAlert.swal({
+          title: "¡Advertencia!",
+          text: "¿Estas seguro de realizar los cambios?",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Aceptar",
+          closeOnConfirm: false}, 
+       function(isConfirm){ 
+         if(isConfirm){
           const encuesta_secciones = angular.copy({...$scope.encuesta, secciones: $scope.asignadas, Estado: 1});
           $scope.listaEncuestas = [encuesta_secciones, ...$scope.listaEncuestas]
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
-     
+          setTimeout(function () {
+            $("#tabConsulta").click();
+          }, 100);
+          $scope.encuesta = {}
+          $scope.asignadas = []
+          $scope.listaRegistrar = angular.copy($scope.secciones)
+          SweetAlert.swal("Exitoso!", "La encuesta se ha registrado exitosamente", "success");
+         }else{
+          $scope.encuesta = {}
+          $scope.asignadas = []
+          $scope.listaRegistrar = angular.copy($scope.secciones)
+         }
+       });  
+      }
+
+           
     };
     $scope.setModificarEncuesta = (encuesta) => {
-      console.log(encuesta);
       $scope.modificarEncuesta = angular.copy(encuesta);
-      console.log($scope.modificarEncuesta);
+      $scope.listaModificar = angular.copy($scope.secciones);
+      const elementosAsignado = new Set($scope.modificarEncuesta.secciones)
+      console.log($scope.listaModificar.filter((item) =>{
+        return !elementosAsignado.has(item.id)
+      })); 
+      console.log("Lista original", $scope.listaModificar);
       $scope.visible = true;
       $scope.bloqueoTab = false
       setTimeout(function () {
         $("#tabModificar").click();
       }, 100);
     };
+
+
+
+
+
+
     $scope.agregar = (seccion) => {
       console.log("agregar");
       $scope.asignadas.push(seccion);
-      $scope.secciones.splice($scope.secciones.indexOf(seccion), 1);
+      $scope.listaRegistrar.splice($scope.listaRegistrar.indexOf(seccion), 1);
     };
     $scope.remover = (seccion) => {
       console.log("removida");
-      $scope.secciones.push(seccion);
+      $scope.listaRegistrar.push(seccion);
       $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1);
-      console.log("Lista original", $scope.secciones);
+      console.log("Lista original", $scope.listaRegistrar);
       console.log("Lista asignada", $scope.asignadas);
     };
+
+    $scope.agregarModificar = (seccion) => {
+      console.log("agregar");
+      $scope.asignadasModificar.push(seccion);
+      $scope.listaModificar.splice($scope.listaModificar.indexOf(seccion), 1);
+    };
+    $scope.removerModificar = (seccion) => {
+      console.log("removida");
+      $scope.listaModificar.push(seccion);
+      $scope.asignadasModificar.splice($scope.asignadasModificar.indexOf(seccion), 1);
+      console.log("Lista original", $scope.listaModificar);
+      console.log("Lista asignada", $scope.asignadasModificar);
+    };
+
     $scope.habilitarEncuesta = (encuesta) => {
       console.log("Habilitar");
       encuesta = { ...encuesta, estado: 1 };
@@ -410,8 +450,22 @@ app.controller("encuesta", [
       $scope.consultaSeccionesAsignadas = secciones;
     } 
     $scope.cambioPeriodo = (e) =>{
-      $scope.encuesta.nombre="ENCUESTA " + e.label
+      if(e?.label){
+        $scope.encuesta.nombre="ENCUESTA " + e.label
+      }else{
+        $scope.encuesta.nombre="" 
+      }    
     }
+
+    $scope.cambiarNombreEncuesta = (e) =>{
+      if(e?.label){
+        $scope.modificarEncuesta.nombre="ENCUESTA " + e.label
+      }else{
+        $scope.modificarEncuesta.nombre="" 
+      } 
+    }
+
+
     $scope.cancelarModificacion = () =>{
       $scope.bloqueoTab = true
       $scope.visible = false
@@ -419,6 +473,9 @@ app.controller("encuesta", [
         $("#tabConsulta").click();
       }, 100);
     }
+
+    
+
 
   },
 ]);

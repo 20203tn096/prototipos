@@ -1,13 +1,24 @@
-<div class="container-fluid">
+<div class="container-fluid" ng-form="encuestaModificarForm">
     <div class="row">
-        <div class="col-12">
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div>
+                <label class="label-form"> Periodo de estadía:<span class="obligatorio">
+                        *</span></label>
+                <select  ng-change="cambiarNombreEncuesta(modificarEncuesta.periodo)" ng-options="item as item.label for item in periodos track by item.id" required ng-required="true"
+                    ng-model="modificarEncuesta.periodo" class="form-control">
+                    <option value="" disabled>SELECCIONE...</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div>
                 <label class="label-form"> Nombre:<span class="obligatorio">
                         *</span></label>
-                <input type="text" ng-model="modificarEncuesta.nombre" class="form-control" disabled>
+                <label ng-bind="modificarEncuesta.nombre" class="form-control">
             </div>
         </div>
-        <div class="col-12">
+        
+        <div class="col-md-12">
             <div>
                 <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
                 </label>
@@ -15,16 +26,7 @@
                     style="resize: none;overflow-y: scroll; height: auto;"></textarea>
             </div>
         </div>
-        <div class="col-12">
-            <div>
-                <label class="label-form"> Periodo de estadía:<span class="obligatorio">
-                        *</span></label>
-                <select ng-options="item as item.label for item in periodos track by item.id"
-                    ng-model="modificarEncuesta.periodo" class="form-control">
-                    <option value="">Selecciona una opcion...</option>
-                </select>
-            </div>
-        </div>
+       
     </div>
 
 </div>
@@ -98,7 +100,7 @@
                     </tr>
                 </thead>
                 <tbody id="modificarSortable" class="ui-sortable">
-                    <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " >
+                    <tr ng-repeat="asignada in modificarEncuesta.secciones  | filter: buscarNombre " >
                         <td class="text-center" > 
                             <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)"> < </button>
                         </td>
@@ -117,7 +119,7 @@
     </div>
     <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
 
-        <button class="btn btn-utez-success" >Guardar</button>
-        <button class="btn btn-utez-danger" ng-click="cancelarModificacion()">Cancelar</button>
+        <button class="btn btn-utez-success" ng-disabled="encuestaModificarForm.$pristine" >Guardar</button>
+        <button class="btn btn-utez-danger" ng-click="cancelarModificacion()" >Cancelar</button>
 </div>
 </div>
