@@ -5,10 +5,10 @@
                 <label class="label-form"> Periodo de estadía:<span class="obligatorio">
                         *</span></label>
 
-                        <select ng-model="encuesta.periodo" class="form-control" ng-change="cambioPeriodo(encuesta.periodo)" ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
+                        <select ng-model="encuesta.periodo" class="form-control" ng-change="changePeriodoRegistro(encuesta.periodo)" ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
                             <option value="" disabled>SELECCIONE...</option>
                           </select>
-                
+                          <span  ng-if="erroresFormularioEncuesta.periodo.error" class="span-error" ng-bind="erroresFormularioEncuesta.periodo.mensaje"></span>
             </div>
         </div>
         <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -23,8 +23,9 @@
             <div>
                 <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
                 </label>
-                <textarea class="form-control" ng-change="cambiosFormulario()" ng-model="encuesta.descripcion"
+                <textarea class="form-control" ng-change="changeDecripcionRegistro()" ng-model="encuesta.descripcion"
                     style="resize: none;overflow-y: scroll; height: auto;" required ng-required="true"></textarea>
+                <span  ng-if="erroresFormularioEncuesta.descripcion.error" class="span-error" ng-bind="erroresFormularioEncuesta.descripcion.mensaje"></span>
             </div>
         </div>
         
@@ -55,7 +56,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="seccion in listaRegistrar  | orderBy: '-estado' | filter: buscarNombre " style="border: 0px !important;" >
+                    <tr ng-if="listaRegistrar.length > 0" ng-repeat="seccion in listaRegistrar  | orderBy: '-estado' | filter: buscarNombre " style="border: 0px !important;" >
                         <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
   
                         </td>
@@ -69,6 +70,11 @@
                         <td class="text-center table-td" ng-if="seccion.estado == 1" >
                             
                             <button class="btn btn-utez-success " ng-click="agregar(seccion)"> > </button>
+                        </td>
+                    </tr>
+                    <tr ng-if="listaRegistrar.length == 0">
+                        <td class="text-center table-td" colspan="3">
+
                         </td>
                     </tr>
                    

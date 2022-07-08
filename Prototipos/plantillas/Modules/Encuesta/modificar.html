@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
                 <tbody  >
-                    <tr ng-repeat="seccion in listaModificar  | filter: buscarNombre " style="border: 0px !important;" >
+                    <tr ng-if="listaModificar.length > 0" ng-repeat="seccion in listaModificar  | filter: buscarNombre " style="border: 0px !important;" >
                         <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
   
                         </td>
@@ -67,7 +67,15 @@
                         </td>
                         <td class="text-center table-td" ng-if="seccion.estado == 1" >
                             
-                            <button class="btn btn-utez-success " ng-click="agregar(seccion)"> > </button>
+                            <button class="btn btn-utez-success " ng-click="agregarModificar(seccion)"> > </button>
+                        </td>
+
+                    </tr>
+                   
+
+                    <tr ng-if="listaModificar.length == 0">
+                        <td class="text-center table-td" colspan="3">
+                            No hay registros
                         </td>
                     </tr>
                    
@@ -102,7 +110,7 @@
                 <tbody id="modificarSortable" class="ui-sortable">
                     <tr ng-repeat="asignada in modificarEncuesta.secciones  | filter: buscarNombre " >
                         <td class="text-center" > 
-                            <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)"> < </button>
+                            <button class="btn btn-utez-danger table-td" ng-click="removerModificar(asignada)"> < </button>
                         </td>
                         <td ng-bind="$index + 1" class="text-center table-td">
                         </td>

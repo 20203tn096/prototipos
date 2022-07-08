@@ -109,3 +109,8 @@
     background-color: #d9534f;
     border-color: #d9534f;
 }
+.span-error{
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}

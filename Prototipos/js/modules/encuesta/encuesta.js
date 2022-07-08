@@ -3,7 +3,8 @@ app.controller("encuesta", [
   "$http",
   "$window",
   "SweetAlert",
-  function ($scope, $http, $window, SweetAlert) {
+  "factoryEncuesta",
+  function ($scope, $http, $window, SweetAlert, factoryEncuesta) {
     $scope.periodos = [
       {
         id: 1,
@@ -34,6 +35,8 @@ app.controller("encuesta", [
         label: "ENERO-ABRIL | 2019 TSU",
       },
     ];
+
+    console.log(factoryEncuesta.validarCampo()); 
 
     $scope.listaEncuestas = [
       {
@@ -426,6 +429,19 @@ app.controller("encuesta", [
       );
     };
 
+    $scope.erroresFormularioEncuesta = {
+      nombre: false,
+      periodo:{
+        error:false,
+        mensaje: ""
+      },
+      descripcion: {
+        error:false,
+        mensaje: ""
+      },
+      seccion: false,
+    }
+
     $scope.setModificarEncuesta = (encuesta) => {
       $scope.modificarEncuesta = angular.copy(encuesta);
       $scope.listaModificar = $scope.secciones.filter((item) => {
@@ -452,6 +468,22 @@ app.controller("encuesta", [
       console.log("Lista original", $scope.listaRegistrar);
       console.log("Lista asignada", $scope.asignadas);
     };
+
+
+    $scope.agregarModificar = (seccion) => {
+      console.log("agregar");
+      $scope.asignadas.push(seccion);
+      $scope.listaModificar.splice($scope.listaModificar.indexOf(seccion), 1);
+    };
+    $scope.removerModificar = (seccion) => {
+      console.log("removida");
+      $scope.listaModificar.push(seccion);
+      $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1);
+      console.log("Lista original", $scope.listaRegistrar);
+      console.log("Lista asignada", $scope.asignadas);
+    };
+
+
 
     $scope.agregarModificar = (seccion) => {
       console.log("agregar");
@@ -482,12 +514,22 @@ app.controller("encuesta", [
       $("#modalSecciones").modal("show");
       $scope.consultaSeccionesAsignadas = secciones;
     };
-    $scope.cambioPeriodo = (e) => {
-      if (e?.label) {
+    $scope.changePeriodoRegistro = (e) => {
+      console.log("Valor del periodo", $scope.encuesta.periodo);
+      if(factoryEncuesta.validarPeriodo($scope.encuesta.periodo)){
+        $scope.erroresFormularioEncuesta.periodo.error = true;
+        $scope.erroresFormularioEncuesta.periodo.mensaje =  factoryEncuesta.validarPeriodo($scope.encuesta.periodo)
+       
+      }else{
+        $scope.erroresFormularioEncuesta.periodo.error = false;
+        if (e?.label) {
         $scope.encuesta.nombre = "ENCUESTA " + e.label;
       } else {
         $scope.encuesta.nombre = "";
       }
+      }
+      
+   
     };
 
     $scope.cambiarNombreEncuesta = (e) => {
@@ -505,5 +547,17 @@ app.controller("encuesta", [
         $("#tabConsulta").click();
       }, 100);
     };
+
+
+    $scope.changeDecripcionRegistro = () =>{
+      if(factoryEncuesta.validarDescripcion($scope.encuesta.descripcion)){
+        $scope.erroresFormularioEncuesta.descripcion.error = true;
+        $scope.erroresFormularioEncuesta.descripcion.mensaje =  factoryEncuesta.validarDescripcion($scope.encuesta.descripcion)
+       
+      }else{
+        $scope.erroresFormularioEncuesta.descripcion.error = false;
+      }
+    }
+
   },
 ]);
