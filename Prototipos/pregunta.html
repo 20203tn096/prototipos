@@ -33,20 +33,20 @@
                 <div id="exTab2">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#1" id="tabConsulta" data-toggle="tab" ng-show="true">Preguntas</a>
+                            <a href="#1" id="tabConsulta" data-toggle="tab" ng-show="tabPreguntas">Preguntas</a>
                         </li>
-                        <li><a href="#2" id="tabRegistro" data-toggle="tab" ng-show="true">Registro</a>
+                        <li><a href="#2" id="tabRegistro" data-toggle="tab" ng-show="tabRegistro">Registro</a>
                         </li>
-                        <li><a href="#3" id="tabModificar" data-toggle="tab" ng-show="visible">Modificar</a>
+                        <li><a href="#3" id="tabModificar" data-toggle="tab" ng-show="tabModificar">Modificar</a>
                         </li>
                     </ul>
 
                     <div class="tab-content" style="margin-top: 20px;">
-                        <div class="tab-pane " id="1" ng-include="'./plantillas/Modules/Pregunta/pregunta.html'">
+                        <div class="tab-pane active" id="1" ng-include="'./plantillas/Modules/Pregunta/pregunta.html'">
 
                         </div>
 
-                        <div class="tab-pane active  " id="2" ng-include="'./plantillas/Modules/Pregunta/registro.html'">
+                        <div class="tab-pane   " id="2" ng-include="'./plantillas/Modules/Pregunta/registro.html'">
 
                         </div>
 

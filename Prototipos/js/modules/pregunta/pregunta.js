@@ -39,7 +39,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 2,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 2",
                                 tipo: {
                                         id: 1,
                                         descripcion: "SiNo"
@@ -63,7 +63,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 3,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 3",
                                 tipo: {
                                         id: 1,
                                         descripcion: "SiNo"
@@ -87,7 +87,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 4,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 4",
                                 tipo: {
                                         id: 1,
                                         descripcion: "SiNo"
@@ -123,7 +123,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 5,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 5",
                                 tipo: {
                                         id: 2,
                                         descripcion: "Multiple"
@@ -159,7 +159,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 6,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 6",
                                 tipo: {
                                         id: 3,
                                         descripcion: "Escala"
@@ -195,7 +195,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 7,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 7",
                                 tipo: {
                                         id: 2,
                                         descripcion: "Multiple"
@@ -225,7 +225,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 8,
-                                enunciado: "Pregunta 1",
+                                enunciado: "Pregunta 8",
                                 tipo: {
                                         id: 3,
                                         descripcion: "Escala"
@@ -315,6 +315,13 @@ app.controller("pregunta", [
 
                 $scope.mapErroresRegistro = new Map();
 
+                $scope.tabPreguntas = true;
+
+                $scope.tabRegistro = true;
+
+
+
+
                 $scope.anadirRespuesta = () => {
                         console.log("Entro a añadir respuesta");
                         console.log("Retorno", factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion)) ;
@@ -326,6 +333,24 @@ app.controller("pregunta", [
                                 $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada))
                         }
 
+                }
+
+                $scope.agregarPreguntas = (pregunta) =>{
+                        $scope.pregunta={}
+                        $scope.pregunta = {...$scope.pregunta, idPregunta: pregunta} 
+                        $scope.tabPreguntas = false;
+                        setTimeout(() => {
+                              $('#tabRegistro').click();  
+                        }, 100);
+                
+                }
+
+                $scope.cancelarRegistro = () =>{
+                        $scope.pregunta = {} 
+                        $scope.tabPreguntas = true;
+                        setTimeout(() => {
+                                $('#tabConsulta').click();  
+                          }, 100);
                 }
 
         }]);

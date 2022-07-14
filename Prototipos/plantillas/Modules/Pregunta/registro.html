@@ -1,4 +1,9 @@
 <div class="container-fluid">
+    <div ng-if="pregunta.idPregunta" class="row">
+        <div class="col-md-12">
+           <label>Enunciado de la pregunta: <span ng-bind="pregunta.idPregunta.enunciado"></span></label>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div>
@@ -78,7 +83,7 @@
         <div class="text-right  col-md-4 col-sm-5 col-md-offset-8 col-sm-offset-7" style="margin-bottom: 25px; margin-top: 25px;">
 
             <button class="btn btn-utez-success" ng-click="save()" ng-disabled="isRegistrar">Registrar</button>
-
+            <button ng-if="pregunta.idPregunta" class="btn btn-utez-danger" ng-click="cancelarRegistro()" ng-disabled="isRegistrar">Cancelar</button>
         </div>
     </div>
 </div>
