@@ -1,0 +1,25 @@
+/* SM */
+@media (min-width:576px){
+    .btn-sm-add{
+        margin-top: 10px;
+    }
+}
+
+/* MD */
+@media (min-width:768px) {
+    .btn-md-add{
+        margin-top: 20px;
+    }
+}
+/* LG */
+@media (min-width:992px) {
+    .btn-lg-add{
+        margin-top: 20px;
+    }
+}
+/* XL */
+@media (min-width:1200px) {
+    .btn-xl-add{
+        margin-top: 20px;
+    }
+}

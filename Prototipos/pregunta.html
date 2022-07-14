@@ -17,11 +17,10 @@
 
 </head>
 
-<body ng-controller="encuesta">
+<body ng-controller="pregunta">
 
     <div ng-include="'./plantillas/sidebar.html'"></div>
 
-    
     <div class="container-fluid">
 
         <div class="panel panel-default ">
@@ -34,20 +33,20 @@
                 <div id="exTab2">
                     <ul class="nav nav-tabs">
                         <li class="active">
-                            <a href="#1" id="tabConsulta" data-toggle="tab" ng-show="bloqueoTab">Encuestas</a>
+                            <a href="#1" id="tabConsulta" data-toggle="tab" ng-show="true">Preguntas</a>
                         </li>
-                        <li><a href="#2" id="tabRegistro" data-toggle="tab" ng-show="bloqueoTab">Registro</a>
+                        <li><a href="#2" id="tabRegistro" data-toggle="tab" ng-show="true">Registro</a>
                         </li>
                         <li><a href="#3" id="tabModificar" data-toggle="tab" ng-show="visible">Modificar</a>
                         </li>
                     </ul>
 
                     <div class="tab-content" style="margin-top: 20px;">
-                        <div class="tab-pane active" id="1" ng-include="'./plantillas/Modules/Encuesta/encuesta.html'">
+                        <div class="tab-pane " id="1" ng-include="'./plantillas/Modules/Pregunta/pregunta.html'">
 
                         </div>
 
-                        <div class="tab-pane  " id="2" ng-include="'./plantillas/Modules/Encuesta/registro.html'">
+                        <div class="tab-pane active  " id="2" ng-include="'./plantillas/Modules/Pregunta/registro.html'">
 
                         </div>
 
@@ -61,12 +60,9 @@
 
     </div>
 
-    <div ng-include="'./plantillas/Modules/Encuesta/modal/modalConsultaSecciones.html'"></div>
 
 
 
-
-    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
     <script src="./js/angular.js"></script>
@@ -74,8 +70,8 @@
     <script src="./js/sweetalert.js"></script>
     <script src="./js/Sweetalert2.js"></script>
     <script src="./app.js"></script>
-    <script src="./js/modules/encuesta/factoryEncuesta.js"></script>
-    <script src="./js/modules/encuesta/encuesta.js"></script>
+    <script src="./js/modules/pregunta/factoryPregunta.js"></script>
+    <script src="./js/modules/pregunta/pregunta.js"></script>
     <script>
         feather.replace()
     </script>

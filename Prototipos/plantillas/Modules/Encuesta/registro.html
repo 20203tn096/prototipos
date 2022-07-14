@@ -1,31 +1,32 @@
 <div class="container-fluid" ng-form="encuestaForm">
     <div class="row">
         <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div>
+            <div ng-class="mapErrores.get('periodo').error && 'form-group has-error'">
                 <label class="label-form"> Periodo de estadía:<span class="obligatorio">
                         *</span></label>
 
                         <select ng-model="encuesta.periodo" class="form-control" ng-change="changePeriodoRegistro(encuesta.periodo)" ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
                             <option value="" disabled>SELECCIONE...</option>
                           </select>
-                          <span  ng-if="erroresFormularioEncuesta.periodo.error" class="span-error" ng-bind="erroresFormularioEncuesta.periodo.mensaje"></span>
+                          <span  ng-if="mapErrores.get('periodo').error" class="span-error" ng-bind="mapErrores.get('periodo').mensaje"></span>
             </div>
         </div>
         <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div>
+            <div ng-class="mapErrores.get('nombre').error && 'form-group has-error'">
                 <label class="label-form"> Nombre:<span class="obligatorio">
                         *</span></label>
                 <label  ng-bind="encuesta.nombre"  class="form-control" ></label>
+                <span  ng-if="mapErrores.get('nombre').error" class="span-error" ng-bind="mapErrores.get('nombre').mensaje"></span>
             </div>
         </div>
        
         <div class="col-md-12">
-            <div>
+            <div ng-class="mapErrores.get('descripcion').error && 'form-group has-error'">
                 <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
                 </label>
                 <textarea class="form-control" ng-change="changeDecripcionRegistro()" ng-model="encuesta.descripcion"
                     style="resize: none;overflow-y: scroll; height: auto;" required ng-required="true"></textarea>
-                <span  ng-if="erroresFormularioEncuesta.descripcion.error" class="span-error" ng-bind="erroresFormularioEncuesta.descripcion.mensaje"></span>
+                <span  ng-if="mapErrores.get('descripcion').error" class="span-error" ng-bind="mapErrores.get('descripcion').mensaje"></span>
             </div>
         </div>
         
@@ -65,7 +66,7 @@
                         </td>
                         <td class="text-center table-td" ng-if="seccion.estado == 0">
                             
-                            <button class="btn " style="background-color: #b2b9ba" disabled> > </button>
+                            <button class="btn"  style="background-color: #b2b9ba" disabled> > </button>
                         </td>
                         <td class="text-center table-td" ng-if="seccion.estado == 1" >
                             
@@ -81,7 +82,7 @@
                 </tbody>
             </table>
 
-
+            <span  ng-if="mapErrores.get('seccion').error" class="span-error" ng-bind="mapErrores.get('seccion').mensaje"></span>
             
         </div>
     </div>
@@ -122,11 +123,12 @@
                    
                 </tbody>
             </table>
+
         </div>
     </div>
     <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
 
-        <button class="btn btn-utez-success"  ng-click="save()" ng-disabled="encuestaForm.$invalid">Registrar</button>
+        <button class="btn btn-utez-success"  ng-click="save()" ng-disabled="isRegistrar">Registrar</button>
       
 </div>
 </div>

@@ -1,48 +1,50 @@
-.panel-header{
-    background-color:  #345177 !important;
-    border-color:  #345177 !important;
+.panel-header {
+    background-color: #345177 !important;
+    border-color: #345177 !important;
     color: #fff;
-    
+
 }
 
-.panel-title{
+.panel-title {
     color: #fff;
     font-size: 25;
 }
 
 
-.table-head{
-    background-color:  #345177 !important;
+.table-head {
+    background-color: #345177 !important;
     color: #fff;
 }
 
-.label-form{
+.label-form {
     font-size: 17px;
     font-weight: bold;
     margin-bottom: 10px;
     margin-top: 20px;
 }
-.sublabel-form{
+
+.sublabel-form {
     font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px;
     margin-top: 5px;
 }
-.obligatorio{
+
+.obligatorio {
     color: red;
     font-size: 20px;
 }
 
-.table-head-2{
+.table-head-2 {
     background-color: #4C535D;
     color: #fff;
 }
 
-.disable-seccion{
+.disable-seccion {
     color: #b2b9ba;
 }
 
-.table-td{
+.table-td {
     border-radius: 3px;
     box-shadow: 0px 0px 9px 0px rgb(0 0 0 / 10%);
 }
@@ -51,49 +53,57 @@
     color: #fff;
     background-color: #009675;
     border-color: #009675;
-  }
-  .btn-utez-success:hover {
+}
+
+.btn-utez-success:hover {
     color: #009675;
     background-color: #fff;
     border-color: #009675;
-  }
+}
 
 .btn-utez-danger {
     color: #fff;
     background-color: #d9534f;
     border-color: #d9534f;
 }
+
 .btn-utez-danger:hover {
     color: #d9534f;
     background-color: #fff;
     border-color: #d9534f;
 }
+
 .btn-utez-warning {
     color: #fff;
     background-color: #eea955;
     border-color: #eea955;
 }
+
 .btn-utez-warning:hover {
     color: #eea955;
     background-color: #fff;
     border-color: #eea955;
 }
+
 .btn-utez-info {
     color: #fff;
     background-color: #345177;
     border-color: #345177;
 }
+
 .btn-utez-info:hover {
     color: #345177;
     background-color: #fff;
     border-color: #345177;
 }
+
 .btn-utez-secondary {
     color: #fff;
     background-color: #b2b9ba;
     border-color: #b2b9ba;
 }
-.sortable:hover{
+
+.sortable:hover {
     cursor: pointer;
     color: #437dc9;
 }
@@ -102,15 +112,96 @@
     color: #fff;
     background-color: #037059;
     border-color: #037059;
-  }
+}
 
 .badge-utez-danger {
     color: #fff;
     background-color: #d9534f;
     border-color: #d9534f;
 }
-.span-error{
+
+.span-error {
     color: red;
     font-size: 14px;
     margin-top: 10px;
+}
+
+.align-items-center {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important
+}
+
+
+.form-row {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -5px
+}
+
+.form-row>.col, .form-row>[class*=col-] {
+    padding-right: 5px;
+    padding-left: 5px
+}
+
+/* SM */
+@media (min-width:576px){
+    .btn-sm-add{
+        margin-top: 5px;
+    }
+}
+
+/* MD */
+@media (min-width:768px) {
+    .btn-md-add{
+        margin-top: 60px;
+    }
+}
+/* LG */
+@media (min-width:992px) {
+    .btn-lg-add{
+        margin-top: 60px;
+    }
+}
+/* XL */
+@media (min-width:1200px) {
+    .btn-xl-add{
+        margin-top: 60px;
+    }
+}
+
+/*XS*/
+@media (min-width:50px){
+    .btn-xs-align{
+        text-align: left;
+    }
+}
+/*SM*/
+@media (min-width:576px){
+    .btn-sm-align{
+        text-align: left;
+    }
+}
+
+/* MD */
+@media (min-width:768px) {
+    .btn-md-align{
+        text-align: right;
+    }
+}
+/* LG */
+@media (min-width:992px) {
+    .btn-lg-align{
+        text-align: right;
+    }
+}
+/* XL */
+@media (min-width:1200px) {
+    .btn-xl-align{
+        text-align: right;
+    }
 }
