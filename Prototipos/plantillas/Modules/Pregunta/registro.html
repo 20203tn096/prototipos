@@ -63,7 +63,7 @@
                     <tr ng-repeat="opcionRespuesta in opcionesRespuesta track by $index" >
                       <td class="text-start" ng-bind="opcionRespuesta.descripcion"></td>
                       <td class="text-center">
-                        <button class="text-center btn" style="background: none;" ng-click="setModificarEncuesta(encuesta)"
+                        <button class="text-center btn" style="background: none;" ng-click="setEliminarOpcion(opcionRespuesta)"
                         > <i class="fa fa-trash" style="font-size: 20px;"></i></button>
                       </td>
                       <td class="text-center">
@@ -80,6 +80,9 @@
                       </tr>
                   </tfoot>
                 </table>
+                <div ng-if="mapErroresRegistro.get('opciones').error" class="alert alert-danger" role="alert">
+                  <span>{{mapErroresRegistro.get('opciones').mensaje}}</span>
+                </div>
              </div>
         </div>
      </div>

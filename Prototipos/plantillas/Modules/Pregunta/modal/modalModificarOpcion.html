@@ -9,20 +9,22 @@
         <div class="container-fluid">
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col">
-                   <div ng-class="">
+                   <div ng-class="mapErroresOpciones.get('opcionModificar').error && 'has-error'">
                        <label class="label-form"> Opcion:<span class="obligatorio">
                            *</span></label>
    
                    <input ng-model="opcionModificar.descripcion" class="form-control" ng-change="changeOpcionModificar()" />
-                   <span ng-if="mapErroresRegistro.get('enunciado').error" class="span-error"
-                   ng-bind="mapErroresRegistro.get('enunciado').mensaje"></span>
+                   <span ng-if="mapErroresOpciones.get('opcionModificar').error" class="span-error"
+                   ng-bind="mapErroresOpciones.get('opcionModificar').mensaje"></span>
                    </div>
                 </div>
             </div>
         </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-utez-success" ng-click="guardarModificacionOpcion()" ng-disabled="isModificarOpcion">Guardar</button>
+          <button type="button" class="btn btn-utez-secondary" data-dismiss="modal">Cerrar</button>
+         
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -103,6 +103,12 @@
     border-color: #b2b9ba;
 }
 
+.btn-utez-secondary:hover {
+    color: #b2b9ba;
+    background-color: #fff;
+    border-color: #b2b9ba;
+}
+
 .sortable:hover {
     cursor: pointer;
     color: #437dc9;

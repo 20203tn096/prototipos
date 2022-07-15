@@ -324,92 +324,196 @@ app.controller("pregunta", [
 
                 $scope.isAnadir = true;
 
+                $scope.isModificarOpcion = true
+
                 $scope.opcionModificar = {}
 
+                $scope.isRegistrar = true
+                
                 $scope.anadirRespuesta = () => {
-                        if(!$scope.isAnadir ){
+                        if (!$scope.isAnadir) {
                                 if (factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion)) {
                                         $scope.mapErroresOpciones.set('opcion', { error: true, mensaje: factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion) });
                                 } else {
-                                        console.log("Result: ",factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada));
-                                        if (factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada)) {
-                                                $scope.mapErroresOpciones.set('opcion', { error: true, mensaje: factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada)});
+                                        console.log("Result: ", factoryPregunta.isSameEnArray($scope.opcionesRespuesta, $scope.opcionIngresada));
+                                        if (factoryPregunta.isSameEnArray($scope.opcionesRespuesta, $scope.opcionIngresada)) {
+                                                $scope.mapErroresOpciones.set('opcion', { error: true, mensaje: factoryPregunta.isSameEnArray($scope.opcionesRespuesta, $scope.opcionIngresada) });
                                         } else {
                                                 console.log("Entro al else");
                                                 $scope.mapErroresOpciones.delete('opcion')
-                                                $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada)) 
-                                        }                                       
+                                                $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada))
+                                                if (factoryPregunta.elementosArray($scope.opcionesRespuesta)) {
+                                                        $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta)});  
+                        
+                                                } else {
+                                                        $scope.mapErroresRegistro.delete('opciones')
+                                                }
+                                        }
                                 }
-                        }else{
+                        } else {
                                 SweetAlert.swal(
                                         {
-                                          title: "!Error!",
-                                          text: "Ingresa un valor en el campo opción",
-                                          type: "error",
+                                                title: "!Error!",
+                                                text: "Ingresa un valor en el campo opción",
+                                                type: "error",
                                         });
                         }
-                        
+                        verificarFormulario()
 
                 }
 
-                $scope.agregarPreguntas = (pregunta) =>{
-                        $scope.pregunta={}
-                        $scope.pregunta = {...$scope.pregunta, idPregunta: pregunta} 
+                $scope.agregarPreguntas = (pregunta) => {
+                        $scope.pregunta = {}
+                        $scope.pregunta = { ...$scope.pregunta, idPregunta: pregunta }
                         $scope.tabPreguntas = false;
                         setTimeout(() => {
-                              $('#tabRegistro').click();  
+                                $('#tabRegistro').click();
                         }, 100);
-                
+
                 }
 
-                $scope.cancelarRegistro = () =>{
+                $scope.cancelarRegistro = () => {
                         $scope.pregunta = {}
                         $scope.opcionIngresada = {};
                         $scope.opcionesRespuesta = []
                         $scope.tabPreguntas = true;
                         setTimeout(() => {
-                                $('#tabConsulta').click();  
-                          }, 100);
+                                $('#tabConsulta').click();
+                        }, 100);
                 }
 
-		$scope.lineInView = (index, inview, inviewInfo) =>{
-			if (!inview && $scope.pregunta.idPregunta != undefined) {
+                $scope.lineInView = (index, inview, inviewInfo) => {
+                        if (!inview && $scope.pregunta.idPregunta != undefined) {
                                 $scope.isAnadir = true
                                 $scope.opcionIngresada = {};
                                 $scope.opcionesRespuesta = [];
-                        }else if(!inview && $scope.pregunta.idPregunta == undefined){
+                        } else if (!inview && $scope.pregunta.idPregunta == undefined) {
                                 $scope.pregunta = {};
                                 $scope.isAnadir = true
                                 $scope.opcionIngresada = {};
                                 $scope.opcionesRespuesta = [];
                         }
-		}
+                }
 
-                $scope.changeEnunciadoRegistro = () =>{
+                $scope.changeEnunciadoRegistro = () => {
                         if (factoryPregunta.validarEnunciado($scope.pregunta.enunciado)) {
                                 $scope.mapErroresRegistro.set('enunciado', { error: true, mensaje: factoryPregunta.validarEnunciado($scope.pregunta.enunciado) });
                         } else {
                                 $scope.mapErroresRegistro.delete('enunciado');
                         }
+                        verificarFormulario()
                 }
 
-                $scope.changeTipoPreguntaRegistro = () =>{
+                $scope.changeTipoPreguntaRegistro = () => {
+                        if($scope.pregunta.tipo?.id == 2){
+                                $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta)});   
+                        }else{
+                                $scope.opcionIngresada = {};
+                                $scope.opcionesRespuesta = [];
+                                $scope.mapErroresRegistro.delete('opciones')
+                        }
+                        console.log($scope.mapErroresRegistro);
+
                         if (factoryPregunta.validarTipoPregunta($scope.tipoPreguntas, $scope.pregunta.tipo)) {
                                 $scope.mapErroresRegistro.set('tipoPregunta', { error: true, mensaje: factoryPregunta.validarTipoPregunta($scope.tipoPreguntas, $scope.pregunta.tipo) });
                         } else {
                                 $scope.mapErroresRegistro.delete('tipoPregunta');
                         }
+                        verificarFormulario()
                 }
 
-                $scope.changeOpcionRegistro = () =>{
-                        $scope.isAnadir =  factoryPregunta.validarCampo($scope.opcionIngresada.descripcion);
+                $scope.changeOpcionRegistro = () => {
+                        $scope.isAnadir = factoryPregunta.validarCampo($scope.opcionIngresada.descripcion);
                 }
 
-                $scope.setModificarOpcion = (opcion) =>{
+                $scope.setModificarOpcion = (opcion) => {
                         console.log(opcion);
+                        $scope.opcionOriginalModificar = angular.copy(opcion)
                         $scope.opcionModificar = angular.copy(opcion)
-                        console.log($scope.opcionModificar);
                         $("#modalModificarOpcion").modal("show");
                 }
- 
+
+                $scope.changeOpcionModificar = () => {
+                        if (factoryPregunta.validarOpcion($scope.opcionModificar.descripcion)) {
+                                $scope.mapErroresOpciones.set('opcionModificar', { error: true, mensaje: factoryPregunta.validarOpcion($scope.opcionModificar.descripcion) });
+                                $scope.isModificarOpcion = true
+                        } else {
+                                if (factoryPregunta.isSameOpcion($scope.opcionOriginalModificar.descripcion, $scope.opcionModificar.descripcion)) {
+                                        $scope.mapErroresOpciones.set('opcionModificar', { error: true, mensaje: factoryPregunta.isSameOpcion($scope.opcionOriginalModificar.descripcion, $scope.opcionModificar.descripcion) });
+                                        $scope.isModificarOpcion = true
+                                } else {
+                                        if (factoryPregunta.isSameEnArray($scope.opcionesRespuesta, $scope.opcionModificar)) {
+                                                $scope.mapErroresOpciones.set('opcionModificar', { error: true, mensaje: factoryPregunta.isSameEnArray($scope.opcionesRespuesta, $scope.opcionModificar) });
+                                                $scope.isModificarOpcion = true
+                                        } else {
+                                                $scope.mapErroresOpciones.delete('opcionModificar')
+                                                $scope.isModificarOpcion = false
+                                        }
+                                }
+                        }
+                }
+
+                $scope.guardarModificacionOpcion = () => {
+
+                        if (!$scope.isModificarOpcion) {
+                                $scope.opcionesRespuesta.splice(factoryPregunta.indexOfOpcion($scope.opcionesRespuesta, $scope.opcionOriginalModificar), 1, $scope.opcionModificar)
+                                SweetAlert.swal(
+                                        "Exitoso!",
+                                        "La encuesta se ha actualizado exitosamente",
+                                        "success"
+                                );
+                                $("#modalModificarOpcion").modal("hide");
+                                $scope.opcionModificar = {}
+                                $scope.isModificarOpcion = true
+
+                        } else {
+                                SweetAlert.swal(
+                                        {
+                                                title: "!Error!",
+                                                text: "Modifica los campos de manera correcta",
+                                                type: "error",
+                                        });
+                        }
+                }
+
+                $scope.setEliminarOpcion = (opcion) => {
+
+                        SweetAlert.swal(
+                                {
+                                        title: "¡Advertencia!",
+                                        text: "¿Estas seguro de realizar los cambios?",
+                                        type: "warning",
+                                        showCancelButton: true,
+                                        confirmButtonColor: "#DD6B55",
+                                        confirmButtonText: "Aceptar",
+                                        closeOnConfirm: false,
+                                },
+                                function (isConfirm) {
+                                        if (isConfirm) {
+                                                $scope.opcionesRespuesta = $scope.opcionesRespuesta.filter((item) => item.descripcion != opcion.descripcion)
+                                                if (factoryPregunta.elementosArray($scope.opcionesRespuesta)) {
+                                                        $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta)});  
+                        
+                                                } else {
+                                                        $scope.mapErroresRegistro.delete('opciones')
+                                                }
+                                                SweetAlert.swal(
+                                                        "Exitoso!",
+                                                        "La respuesta se ha eliminado exitosamente",
+                                                        "success"
+                                                );
+                                        }
+                                }
+                        );
+                        verificarFormulario()
+                }
+
+                const verificarFormulario = () => {
+                        $scope.isRegistrar = factoryPregunta.validarFormulario($scope.mapErroresRegistro) ||
+                        factoryPregunta.isUndefined($scope.pregunta.enunciado) ||
+                        factoryPregunta.isUndefined($scope.pregunta.tipo) 
+
+                          console.log("Valor de isRegistrar: ", $scope.isRegistrar);
+                      }
+
         }]);

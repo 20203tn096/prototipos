@@ -39,7 +39,28 @@ app.factory("factoryPregunta", () => {
         validarCampo: (campo) =>{
             if (campo == "" || campo == undefined) return true
             return false
-        }
+        },
+        isSameOpcion: (opcionAnterior, opcionActual) =>{
+            if( opcionAnterior == opcionActual) return "La opción no debe ser igual que la anterior"
+            return null
+        },
+        indexOfOpcion: (array, elemento) =>{
+            for (let index = 0; index < array.length; index++) {
+              if(array[index].descripcion == elemento.descripcion) return index
+            }
+            return -1
+        },
+        elementosArray: (array) =>{
+            if(array.length < 2) return "Debes agregar al menos dos respuestas"
+            return null
+        },
+        isUndefined: (campo) => {
+            if (campo == undefined) return true
+            return false
+        },
+        validarFormulario: (map) => {
+            return !(map.size == 0)
+        },
 
 
     }
