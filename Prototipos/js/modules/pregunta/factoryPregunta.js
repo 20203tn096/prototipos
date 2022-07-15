@@ -9,10 +9,39 @@ app.factory("factoryPregunta", () => {
     let metodos = {
         validarOpcion: (opcion) => {
             console.log("Opcion", opcion);
-            if(opcion == "" || opcion == undefined) return "Ingresa valores válidos"
+            if (opcion == "" || opcion == undefined) return "Ingresa valores válidos"
             return null
         },
-        
+        isSameEnArray: (array, elemento) => {
+            const elementos = array.filter((item) => item.descripcion == elemento.descripcion)
+            if (elementos.length > 0) return "La respuesta ya existe"
+            return null
+        },
+        validarEnunciado: (enunciado) => {
+            if (CADENA_VACIA.test(enunciado)) return "Campo obligatorio."
+            if (enunciado.length > NOMBRE_ENCUESTA_MAX) return `Has excedido el máximo número de caracteres`
+            return null
+        },
+        validarTipoPregunta: (array, tipo) => {
+            let retorno;
+            if (tipo == undefined || tipo == null) {
+                retorno = "Ingresa valores válidos";
+            } else {
+                const elementos = array.filter((item) => item.id == tipo.id)
+                if (elementos == 0) {
+                    retorno = "Tipo de pregunta inexistente";
+                } else {
+                    retorno = null;
+                }
+            }
+            return retorno
+        },
+        validarCampo: (campo) =>{
+            if (campo == "" || campo == undefined) return true
+            return false
+        }
+
+
     }
 
     return metodos

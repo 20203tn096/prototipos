@@ -4,7 +4,8 @@ app.controller("pregunta", [
         "$window",
         "SweetAlert",
         "factoryPregunta",
-        function ($scope, $http, $window, SweetAlert, factoryPregunta) {
+        "$sce",
+        function ($scope, $http, $window, SweetAlert, factoryPregunta, $sce) {
 
                 $scope.listaPreguntas = [
                         {
@@ -315,23 +316,39 @@ app.controller("pregunta", [
 
                 $scope.mapErroresRegistro = new Map();
 
+                $scope.mapErroresOpciones = new Map();
+
                 $scope.tabPreguntas = true;
 
                 $scope.tabRegistro = true;
 
+                $scope.isAnadir = true;
 
-
+                $scope.opcionModificar = {}
 
                 $scope.anadirRespuesta = () => {
-                        console.log("Entro a añadir respuesta");
-                        console.log("Retorno", factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion)) ;
-                        if (factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion)) {
-                                $scope.mapErroresRegistro.set('opcion', { error: true, mensaje: factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion) });
-                        } else {
-                                console.log("Entro al else");
-                                $scope.mapErroresRegistro.delete('opcion')
-                                $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada))
+                        if(!$scope.isAnadir ){
+                                if (factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion)) {
+                                        $scope.mapErroresOpciones.set('opcion', { error: true, mensaje: factoryPregunta.validarOpcion($scope.opcionIngresada.descripcion) });
+                                } else {
+                                        console.log("Result: ",factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada));
+                                        if (factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada)) {
+                                                $scope.mapErroresOpciones.set('opcion', { error: true, mensaje: factoryPregunta.isSameEnArray($scope.opcionesRespuesta,$scope.opcionIngresada)});
+                                        } else {
+                                                console.log("Entro al else");
+                                                $scope.mapErroresOpciones.delete('opcion')
+                                                $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada)) 
+                                        }                                       
+                                }
+                        }else{
+                                SweetAlert.swal(
+                                        {
+                                          title: "!Error!",
+                                          text: "Ingresa un valor en el campo opción",
+                                          type: "error",
+                                        });
                         }
+                        
 
                 }
 
@@ -346,11 +363,53 @@ app.controller("pregunta", [
                 }
 
                 $scope.cancelarRegistro = () =>{
-                        $scope.pregunta = {} 
+                        $scope.pregunta = {}
+                        $scope.opcionIngresada = {};
+                        $scope.opcionesRespuesta = []
                         $scope.tabPreguntas = true;
                         setTimeout(() => {
                                 $('#tabConsulta').click();  
                           }, 100);
                 }
 
+		$scope.lineInView = (index, inview, inviewInfo) =>{
+			if (!inview && $scope.pregunta.idPregunta != undefined) {
+                                $scope.isAnadir = true
+                                $scope.opcionIngresada = {};
+                                $scope.opcionesRespuesta = [];
+                        }else if(!inview && $scope.pregunta.idPregunta == undefined){
+                                $scope.pregunta = {};
+                                $scope.isAnadir = true
+                                $scope.opcionIngresada = {};
+                                $scope.opcionesRespuesta = [];
+                        }
+		}
+
+                $scope.changeEnunciadoRegistro = () =>{
+                        if (factoryPregunta.validarEnunciado($scope.pregunta.enunciado)) {
+                                $scope.mapErroresRegistro.set('enunciado', { error: true, mensaje: factoryPregunta.validarEnunciado($scope.pregunta.enunciado) });
+                        } else {
+                                $scope.mapErroresRegistro.delete('enunciado');
+                        }
+                }
+
+                $scope.changeTipoPreguntaRegistro = () =>{
+                        if (factoryPregunta.validarTipoPregunta($scope.tipoPreguntas, $scope.pregunta.tipo)) {
+                                $scope.mapErroresRegistro.set('tipoPregunta', { error: true, mensaje: factoryPregunta.validarTipoPregunta($scope.tipoPreguntas, $scope.pregunta.tipo) });
+                        } else {
+                                $scope.mapErroresRegistro.delete('tipoPregunta');
+                        }
+                }
+
+                $scope.changeOpcionRegistro = () =>{
+                        $scope.isAnadir =  factoryPregunta.validarCampo($scope.opcionIngresada.descripcion);
+                }
+
+                $scope.setModificarOpcion = (opcion) =>{
+                        console.log(opcion);
+                        $scope.opcionModificar = angular.copy(opcion)
+                        console.log($scope.opcionModificar);
+                        $("#modalModificarOpcion").modal("show");
+                }
+ 
         }]);
