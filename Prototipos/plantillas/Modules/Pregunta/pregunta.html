@@ -28,13 +28,18 @@
                             {{ pregunta.tipo.descripcion}}
                         </td>
                         <td class="text-center">
-                            <span ng-bind="'Secciones: ' + pregunta.secciones.length" class="badge badge-utez-success"
+                            <span ng-if="pregunta.secciones.length > 0"
+                                ng-bind="'Secciones: ' + pregunta.secciones.length" class="badge badge-utez-success"
                                 style="font-size: 12px; cursor: pointer;"
+                                ng-click="modalConsultaSecciones(encuesta.secciones)"></span>
+                            <span ng-if="pregunta.secciones == null"
+                                ng-bind="'Sin secciones'" class="badge badge-utez-success"
+                                style="font-size: 12px;"
                                 ng-click="modalConsultaSecciones(encuesta.secciones)"></span>
                         </td>
 
                         <td class="text-center" style="vertical-align: middle;">
-                            <button class="text-center btn btn-utez-warning" ng-click="setModificarEncuesta(encuesta)"
+                            <button class="text-center btn btn-utez-warning" ng-click="setModificarPregunta(pregunta)"
                                 style=" margin-right: 20px;"> <i class="fa fa-pencil"></i></button>
                             <button ng-if="pregunta.estado == 1" ng-click="deshabilitarEncuesta(encuesta)"
                                 class="text-center btn btn-utez-danger" style=" margin-right: 20px;"> <i
@@ -42,9 +47,8 @@
                             <button ng-if="pregunta.estado == 0" ng-click="habilitarEncuesta(encuesta)"
                                 class="text-center btn btn-utez-success" style=" margin-right: 20px;"> <i
                                     class="fa fa-check"></i></button>
-                            <button ng-click="agregarPreguntas(pregunta)"
-                                class="text-center btn btn-utez-info" style=" margin-right: 20px;"> <i
-                                    class="fa fa-question"></i></button>
+                            <button ng-click="agregarPreguntas(pregunta)" class="text-center btn btn-utez-info"
+                                style=" margin-right: 20px;"> <i class="fa fa-question"></i></button>
                         </td>
 
                     </tr>

@@ -1,51 +1,46 @@
 <div class="container-fluid" in-view="lineInView($index, $inview, $inviewInfo)">
-    <div ng-if="pregunta.idPregunta" class="row">
-        <div class="col-md-12">
-           <label>Enunciado de la pregunta: <span ng-bind="pregunta.idPregunta.enunciado"></span></label>
-        </div>
-    </div>
     <div class="row">
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div ng-class="mapErroresRegistro.get('enunciado').error && 'has-error'">
+            <div ng-class="mapErroresModificacion.get('enunciado').error && 'has-error'">
                 <label class="label-form"> Enunciado:<span class="obligatorio">
                         *</span></label>
 
-                <input ng-model="pregunta.enunciado" class="form-control" ng-change="changeEnunciadoRegistro()" />
-                <span ng-if="mapErroresRegistro.get('enunciado').error" class="span-error"
-                ng-bind="mapErroresRegistro.get('enunciado').mensaje"></span>
+                <input ng-model="preguntaModificar.enunciado" class="form-control" ng-change="changeEnunciadoModificacion()" />
+                <span ng-if="mapErroresModificacion.get('enunciado').error" class="span-error"
+                ng-bind="mapErroresModificacion.get('enunciado').mensaje"></span>
             </div>
         </div>
 
         <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <div ng-class="mapErroresRegistro.get('tipoPregunta').error && 'has-error'">
+            <div ng-class="mapErroresModificacion.get('tipoPregunta').error && 'has-error'">
                 <label class="label-form"> Tipo de pregunta:<span class="obligatorio">
                         *</span></label>
-                <select ng-model="pregunta.tipo" class="form-control"
-                    ng-change="changeTipoPreguntaRegistro( )"
+                <select ng-model="preguntaModificar.tipo" class="form-control"
+                    ng-change="changeTipoPreguntaModificacion( )"
                     ng-options="item as item.descripcion for item in tipoPreguntas track by item.id" required ng-required="true">
                     <option value="" disabled>SELECCIONE...</option>
                 </select>
-                <span ng-if="mapErroresRegistro.get('tipoPregunta').error" class="span-error"
-                    ng-bind="mapErroresRegistro.get('tipoPregunta').mensaje" </span>
+                <span ng-if="mapErroresModificacion.get('tipoPregunta').error" class="span-error"
+                    ng-bind="mapErroresModificacion.get('tipoPregunta').mensaje" </span>
             </div>
         </div>
     </div>
 
-     <div ng-if="pregunta.tipo.id == 2" class="form-row align-items-center " >
+     <div ng-if="preguntaModificar.tipo.id == 2" class="form-row align-items-center " >
         <div class="form-group col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-12 ">
            
-            <div ng-class="mapErroresOpciones.get('opcion').error && 'has-error'">
+            <div ng-class="mapErroresOpcionesModificar.get('opcion').error && 'has-error'">
                 <label class="label-form"> Opción de repuesta:<span class="obligatorio">
                     *</span></label>
-                <input ng-model="opcionIngresada.descripcion" class="form-control" ng-change="changeOpcionRegistro()" />
-                <span ng-if="mapErroresOpciones.get('opcion').error" class="span-error"
-                ng-bind="mapErroresOpciones.get('opcion').mensaje"></span>
+                <input ng-model="opcionIngresadaModificar.descripcion" class="form-control" ng-change="changeOpcionModificar()" />
+                <span ng-if="mapErroresOpcionesModificar.get('opcion').error" class="span-error"
+                ng-bind="mapErroresOpcionesModificar.get('opcion').mensaje"></span>
             </div>
         </div>
 
         <div class="form-group col-xxl-2 col-xl-2 col-lg-2 col-md-2 col-sm-2 col-xs-12 " style=" justify-content: flex-end; align-items:flex-end!important">
             <div class="btn-xs-align btn-sm-align btn-md-align">
-                    <button class="btn btn-utez-success btn-sm-add btn-md-add btn-lg-add" ng-click="anadirRespuesta()" ng-disabled="isAnadir">Añadir</button>
+                    <button class="btn btn-utez-success btn-sm-add btn-md-add btn-lg-add" ng-click="anadirRespuestaModificar()" ng-disabled="isAnadirModificar">Añadir</button>
             </div>
         </div>
         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" style="margin-top: 20px;">
@@ -60,28 +55,28 @@
                   </thead>
                   <tbody>
                    
-                    <tr ng-repeat="opcionRespuesta in opcionesRespuesta track by $index" >
+                    <tr ng-repeat="opcionRespuesta in preguntaModificar.opcionesRespuesta track by $index" >
                       <td class="text-start" ng-bind="opcionRespuesta.descripcion"></td>
                       <td class="text-center">
-                        <button class="text-center btn" style="background: none;" ng-click="setEliminarOpcion(opcionRespuesta)"
+                        <button class="text-center btn" style="background: none;" ng-click="setEliminarOpcionModificar(opcionRespuesta)"
                         > <i class="fa fa-trash" style="font-size: 20px;"></i></button>
                       </td>
                       <td class="text-center">
-                        <button class="text-center btn" style="background: none;" ng-click="setModificarOpcion(opcionRespuesta)"
+                        <button class="text-center btn" style="background: none;" ng-click="setModificarOpcionModificar(opcionRespuesta)"
                         > <i class="fa fa-pencil" style="font-size: 20px;"></i></button>
                       </td>
 
                     </tr>
     
                   </tbody>
-                  <tfoot ng-if="opcionesRespuesta.length == 0">
+                  <tfoot ng-if="preguntaModificar.opcionesRespuesta.length == 0">
                       <tr>
                         <td colspan="3" class="text-center">No hay opciones</td>  
                       </tr>
                   </tfoot>
                 </table>
-                <div ng-if="mapErroresRegistro.get('opciones').error" class="alert alert-danger" role="alert">
-                  <span>{{mapErroresRegistro.get('opciones').mensaje}}</span>
+                <div ng-if="mapErroresModificacion.get('opciones').error" class="alert alert-danger" role="alert">
+                  <span>{{mapErroresModificacion.get('opciones').mensaje}}</span>
                 </div>
              </div>
         </div>
@@ -91,8 +86,8 @@
     <div class="row">
         <div class="text-right  col-md-4 col-sm-5 col-md-offset-8 col-sm-offset-7" style="margin-bottom: 25px; margin-top: 25px;">
 
-            <button class="btn btn-utez-success" ng-click="guardarPregunta()" ng-disabled="isRegistrar">Registrar</button>
-            <button ng-if="pregunta.idPregunta" class="btn btn-utez-danger" ng-click="cancelarRegistro()" >Cancelar</button>
+            <button class="btn btn-utez-success" ng-click="modificarPregunta()" ng-disabled="isModificar">Guardar</button>
+            <button class="btn btn-utez-danger" ng-click="cancelarModificacion()" >Cancelar</button>
         </div>
     </div>
 </div>

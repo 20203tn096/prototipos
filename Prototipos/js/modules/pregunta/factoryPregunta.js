@@ -8,7 +8,6 @@ app.factory("factoryPregunta", () => {
 
     let metodos = {
         validarOpcion: (opcion) => {
-            console.log("Opcion", opcion);
             if (opcion == "" || opcion == undefined) return "Ingresa valores válidos"
             return null
         },
@@ -61,6 +60,32 @@ app.factory("factoryPregunta", () => {
         validarFormulario: (map) => {
             return !(map.size == 0)
         },
+        isSameEnunciado: (valorAnterior, valorActual) => {
+            return valorAnterior == valorActual;
+        },
+        isSameTipo: (valorAnterior, valorActual) => {
+            return valorAnterior.id == valorActual.id
+        },
+        isSameRespuestas: (respuestasAnteriores, respuestasActuales) => {
+            console.log("Respuestas Anteriores: ", respuestasAnteriores);
+            console.log("Respuestas actuales: ", respuestasActuales);
+            if (respuestasAnteriores.length == respuestasActuales.length) {
+                const elementosDiferentes = respuestasActuales.filter((item) => {
+                    if (!respuestasAnteriores.find((it) => it.descripcion === item.descripcion))
+                        return true;
+                });
+                console.log(elementosDiferentes);
+                return !(elementosDiferentes.length > 0);
+            } else {
+                return false;
+            }
+        },
+       indexOf: (array, elemento) =>{
+        for (let index = 0; index < array.length; index++) {
+          if(array[index].id == elemento.id) return index
+        }
+        return -1
+      }
 
 
     }
