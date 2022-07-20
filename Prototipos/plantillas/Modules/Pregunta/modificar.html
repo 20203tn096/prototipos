@@ -75,10 +75,11 @@
                       </tr>
                   </tfoot>
                 </table>
-                <div ng-if="mapErroresModificacion.get('opciones').error" class="alert alert-danger" role="alert">
-                  <span>{{mapErroresModificacion.get('opciones').mensaje}}</span>
-                </div>
+                
              </div>
+             <div ng-if="mapErroresModificacion.get('opciones').error" class="alert alert-danger" role="alert">
+              <span class="text-justify">{{mapErroresModificacion.get('opciones').mensaje}}</span>
+            </div>
         </div>
      </div>
 

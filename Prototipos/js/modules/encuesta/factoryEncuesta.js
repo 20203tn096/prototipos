@@ -51,7 +51,6 @@ app.factory("factoryEncuesta", () => {
                     if (!seccionesAnterioes.find((it) => it.id === item.id))
                         return true;
                 });
-                console.log(elementosDiferentes);
                 return !(elementosDiferentes.length > 0);
             } else {
                 return false;

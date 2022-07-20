@@ -5,31 +5,36 @@
                 <label class="label-form"> Periodo de estadía:<span class="obligatorio">
                         *</span></label>
 
-                        <select ng-model="encuesta.periodo" class="form-control" ng-change="changePeriodoRegistro(encuesta.periodo)" ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
-                            <option value="" disabled>SELECCIONE...</option>
-                          </select>
-                          <span  ng-if="mapErrores.get('periodo').error" class="span-error" ng-bind="mapErrores.get('periodo').mensaje"></span>
+                <select ng-model="encuesta.periodo" class="form-control"
+                    ng-change="changePeriodoRegistro()"
+                    ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
+                    <option value="" disabled>SELECCIONE...</option>
+                </select>
+                <span ng-if="mapErrores.get('periodo').error" class="span-error"
+                    ng-bind="mapErrores.get('periodo').mensaje"></span>
             </div>
         </div>
         <div class=" col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <div ng-class="mapErrores.get('nombre').error && 'form-group has-error'">
                 <label class="label-form"> Nombre:<span class="obligatorio">
                         *</span></label>
-                <label  ng-bind="encuesta.nombre"  class="form-control" ></label>
-                <span  ng-if="mapErrores.get('nombre').error" class="span-error" ng-bind="mapErrores.get('nombre').mensaje"></span>
+                <label ng-bind="encuesta.nombre" class="form-control"></label>
+                <span ng-if="mapErrores.get('nombre').error" class="span-error"
+                    ng-bind="mapErrores.get('nombre').mensaje"></span>
             </div>
         </div>
-       
+
         <div class="col-md-12">
             <div ng-class="mapErrores.get('descripcion').error && 'form-group has-error'">
                 <label class="label-form"> Descripción:<span class="obligatorio"> *</span>
                 </label>
                 <textarea class="form-control" ng-change="changeDecripcionRegistro()" ng-model="encuesta.descripcion"
                     style="resize: none;overflow-y: scroll; height: auto;" required ng-required="true"></textarea>
-                <span  ng-if="mapErrores.get('descripcion').error" class="span-error" ng-bind="mapErrores.get('descripcion').mensaje"></span>
+                <span ng-if="mapErrores.get('descripcion').error" class="span-error"
+                    ng-bind="mapErrores.get('descripcion').mensaje"></span>
             </div>
         </div>
-        
+
     </div>
 
 </div>
@@ -38,38 +43,40 @@
     <div class="col-12 col-md-6">
         <label class="sublabel-form"> Secciones:</label>
         <div class="table table-responsive">
-            <table  class="table table-striped table-bordered table-condensed table-hover"
-                st-table="alumnosTabla" st-safe-src="listaEncuestas"  style="border: 0px !important;">
+            <table class="table table-striped table-bordered table-condensed table-hover" st-table="alumnosTabla"
+                st-safe-src="listaEncuestas" style="border: 0px !important;">
                 <thead class="table-head-2">
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;" class="text-center">
                             #</th>
                         <th class="text-center" st-sort="matricula">Nombre</th>
-                        <th rowspan="2"
-                            style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                        <th rowspan="2" style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
                             class="text-center">Asignar</th>
                     </tr>
                     <tr>
 
-                        <th><input ng-model="buscarNombre" placeholder="Buscar..."
-                                class="input-sm form-control" type="search"
-                                id="busquedaMatricula" /></th>
+                        <th><input ng-model="buscarNombre" placeholder="Buscar..." class="input-sm form-control"
+                                type="search" id="busquedaMatricula" /></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-if="listaRegistrar.length > 0" ng-repeat="seccion in listaRegistrar  | orderBy: '-estado' | filter: buscarNombre " style="border: 0px !important;" >
-                        <td ng-bind="$index + 1" ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
-  
+                    <tr ng-if="listaRegistrar.length > 0"
+                        ng-repeat="seccion in listaRegistrar  | orderBy: '-estado' | filter: buscarNombre "
+                        style="border: 0px !important;">
+                        <td ng-bind="$index + 1"
+                            ng-class="  seccion.estado == 0 ? 'disable-seccion text-center table-td' : 'text-center table-td' ">
+
                         </td>
-                        <td   ng-class="  seccion.estado == 0 ? 'disable-seccion text-start table-td' : 'text-start table-td' ">
+                        <td
+                            ng-class="  seccion.estado == 0 ? 'disable-seccion text-start table-td' : 'text-start table-td' ">
                             {{seccion.nombre}}
                         </td>
                         <td class="text-center table-td" ng-if="seccion.estado == 0">
-                            
-                            <button class="btn"  style="background-color: #b2b9ba" disabled> > </button>
+
+                            <button class="btn" style="background-color: #b2b9ba" disabled> > </button>
                         </td>
-                        <td class="text-center table-td" ng-if="seccion.estado == 1" >
-                            
+                        <td class="text-center table-td" ng-if="seccion.estado == 1">
+
                             <button class="btn btn-utez-success " ng-click="agregar(seccion)"> > </button>
                         </td>
                     </tr>
@@ -78,23 +85,23 @@
 
                         </td>
                     </tr>
-                   
+
                 </tbody>
             </table>
 
-            <span  ng-if="mapErrores.get('seccion').error" class="span-error" ng-bind="mapErrores.get('seccion').mensaje"></span>
-            
+            <span ng-if="mapErrores.get('seccion').error" class="span-error"
+                ng-bind="mapErrores.get('seccion').mensaje"></span>
+
         </div>
     </div>
     <div class="col-12 col-md-6">
         <label class="sublabel-form"> Secciones asignadas:</label>
         <div class="table table-responsive">
-            <table class="table table-striped table-bordered table-condensed table-hover"
-                st-table="alumnosTabla" st-safe-src="listaEncuestas">
+            <table class="table table-striped table-bordered table-condensed table-hover" st-table="alumnosTabla"
+                st-safe-src="listaEncuestas">
                 <thead class="table-head-2">
                     <tr>
-                        <th rowspan="2"
-                            style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
+                        <th rowspan="2" style="vertical-align: middle; padding-left: 15px; padding-right: 15px;"
                             class="text-center">Remover</th>
                         <th rowspan="2" style="vertical-align: middle;" class="text-center">
                             #</th>
@@ -102,25 +109,25 @@
                     </tr>
                     <tr>
 
-                        <th><input st-search="matriculaAlumno" placeholder="Buscar..."
-                                class="input-sm form-control" type="search"
-                                id="busquedaMatricula" /></th>
+                        <th><input st-search="matriculaAlumno" placeholder="Buscar..." class="input-sm form-control"
+                                type="search" id="busquedaMatricula" /></th>
                     </tr>
                 </thead>
                 <tbody ui-sortable="sortableOptions" ng-model="asignadas">
                     <tr ng-repeat="asignada in asignadas  | filter: buscarNombre " class="sortable">
-                        <td class="text-center" > 
-                            <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)"> < </button>
+                        <td class="text-center">
+                            <button class="btn btn-utez-danger table-td" ng-click="remover(asignada)">
+                                < </button>
                         </td>
                         <td ng-bind="$index + 1" class="text-center table-td ">
                         </td>
-                        <td class="text-start table-td" >
+                        <td class="text-start table-td">
                             {{asignada.nombre}}
                         </td>
-                       
-                       
+
+
                     </tr>
-                   
+
                 </tbody>
             </table>
 
@@ -128,7 +135,7 @@
     </div>
     <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
 
-        <button class="btn btn-utez-success"  ng-click="save()" ng-disabled="isRegistrar">Registrar</button>
-      
-</div>
+        <button class="btn btn-utez-success" ng-click="save()" ng-disabled="isRegistrar">Registrar</button>
+
+    </div>
 </div>

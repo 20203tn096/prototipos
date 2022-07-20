@@ -22,18 +22,18 @@ app.controller("encuesta", [
         id: 4,
         label: "ENERO-ABRIL | 2021 TSU",
       },
-      {
-        id: 5,
-        label: "ENERO-ABRIL | 2020 INGENIERIAS",
-      },
-      {
-        id: 6,
-        label: "ENERO-ABRIL | 2019 INGENIERIAS",
-      },
-      {
-        id: 7,
-        label: "ENERO-ABRIL | 2019 TSU",
-      },
+      // {
+      //   id: 5,
+      //   label: "ENERO-ABRIL | 2020 INGENIERIAS",
+      // },
+      // {
+      //   id: 6,
+      //   label: "ENERO-ABRIL | 2019 INGENIERIAS",
+      // },
+      // {
+      //   id: 7,
+      //   label: "ENERO-ABRIL | 2019 TSU",
+      // },
     ];
 
     $scope.listaEncuestas = [
@@ -384,18 +384,18 @@ app.controller("encuesta", [
 
     $scope.sortableOptions = {
       beforeStop: function () {
-        console.log("beforeStop");
+        // console.log("beforeStop");
       },
       change: function () {
-        console.log("change");
+        // console.log("change");
       },
       start: function (e, ui) { },
       update: function (e, ui) {
-        console.log("update");
+        // console.log("update");
       },
       stop: function (e, ui) {
         let index = ui.item.index();
-        console.log("stop", index);
+        // console.log("stop", index);
         $scope.asignadas[index].order = index;
       },
     };
@@ -421,6 +421,7 @@ app.controller("encuesta", [
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Aceptar",
+            cancelButtonText: "Cancelar",
             closeOnConfirm: false,
           },
           function (isConfirm) {
@@ -474,6 +475,7 @@ app.controller("encuesta", [
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "Aceptar",
+            cancelButtonText: "Cancelar",
             closeOnConfirm: false,
           },
           function (isConfirm) {
@@ -485,15 +487,13 @@ app.controller("encuesta", [
               $scope.modificarEncuesta = {};
               $scope.listaModificar = angular.copy($scope.secciones);;
               $scope.isModificar = true;
+              $scope.bloqueoTab = true;
+              $scope.visible = false
               SweetAlert.swal(
                 "Exitoso!",
                 "La encuesta se ha actualizado exitosamente",
                 "success"
               );
-            } else {
-              $scope.modificarEncuesta = {};
-              $scope.listaModificar = angular.copy($scope.secciones);;
-              $scope.isModificar = true;
             }
           }
         );
@@ -514,7 +514,6 @@ app.controller("encuesta", [
         if (!$scope.modificarEncuesta.secciones.find((it) => it.id === item.id))
           return true;
       });
-      console.log("Secciones a modificar ", $scope.listaModificar);
       $scope.visible = true;
       $scope.bloqueoTab = false;
       setTimeout(function () {
@@ -527,7 +526,6 @@ app.controller("encuesta", [
         $scope.mapErrores.set('seccion', { error: true, mensaje: factoryEncuesta.validarSeccion(seccion) })
       } else {
         $scope.mapErrores.delete('seccion')
-        console.log("agregar");
         $scope.asignadas.push(seccion);
         $scope.listaRegistrar.splice($scope.listaRegistrar.indexOf(seccion), 1);
       }
@@ -535,39 +533,29 @@ app.controller("encuesta", [
     };
 
     $scope.remover = (seccion) => {
-      console.log("removida");
       $scope.listaRegistrar.push(seccion);
       $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1);
 
     };
 
     $scope.agregarModificar = (seccion) => {
-      console.log("agregar");
       $scope.modificarEncuesta.secciones.push(seccion)
       $scope.listaModificar.splice($scope.listaModificar.indexOf(seccion), 1);
-      console.log("Lista original", $scope.originalEncuesta.secciones);
-      console.log("Lista asignada", $scope.modificarEncuesta.secciones);
       verificarFormularioModificar()
     };
 
     $scope.removerModificar = (seccion) => {
-      console.log("removida");
       $scope.listaModificar.push(seccion);
       $scope.modificarEncuesta.secciones.splice($scope.modificarEncuesta.secciones.indexOf(seccion), 1);
-      console.log("Lista original", $scope.listaModificar);
-      console.log("Lista asignada", $scope.originalEncuesta.secciones);
       verificarFormularioModificar()
 
     };
 
     $scope.habilitarEncuesta = (encuesta) => {
-      console.log("Habilitar");
       encuesta = { ...encuesta, estado: 1 };
-      console.log(encuesta);
     };
 
     $scope.deshabilitarEncuesta = (encuesta) => {
-      console.log("Deshabilitar");
       encuesta = { ...encuesta, estado: 0 };
     };
 
@@ -654,7 +642,6 @@ app.controller("encuesta", [
           factoryEncuesta.isSameDescripcion($scope.originalEncuesta.descripcion, $scope.modificarEncuesta.descripcion) &&
           factoryEncuesta.isSamePeriodo($scope.originalEncuesta.periodo, $scope.modificarEncuesta.periodo) &&
           factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones));
-      console.log("Valor de isModificar:  ", $scope.isModificar);
     }
 
     const indexOf = (array, elemento) =>{

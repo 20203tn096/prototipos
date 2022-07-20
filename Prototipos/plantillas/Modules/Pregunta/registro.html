@@ -79,11 +79,11 @@
                         <td colspan="3" class="text-center">No hay opciones</td>  
                       </tr>
                   </tfoot>
-                </table>
-                <div ng-if="mapErroresRegistro.get('opciones').error" class="alert alert-danger" role="alert">
-                  <span>{{mapErroresRegistro.get('opciones').mensaje}}</span>
-                </div>
+                </table>      
              </div>
+             <div ng-if="mapErroresRegistro.get('opciones').error" class="alert alert-danger" role="alert">
+              <span class="text-justify">{{mapErroresRegistro.get('opciones').mensaje}}</span>
+            </div>
         </div>
      </div>
 

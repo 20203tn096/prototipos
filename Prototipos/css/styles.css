@@ -183,13 +183,13 @@
 /*XS*/
 @media (min-width:50px){
     .btn-xs-align{
-        text-align: left;
+        text-align: right;
     }
 }
 /*SM*/
 @media (min-width:576px){
     .btn-sm-align{
-        text-align: left;
+        text-align: right;
     }
 }
 

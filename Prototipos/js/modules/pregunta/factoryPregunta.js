@@ -35,22 +35,22 @@ app.factory("factoryPregunta", () => {
             }
             return retorno
         },
-        validarCampo: (campo) =>{
+        validarCampo: (campo) => {
             if (campo == "" || campo == undefined) return true
             return false
         },
-        isSameOpcion: (opcionAnterior, opcionActual) =>{
-            if( opcionAnterior == opcionActual) return "La opción no debe ser igual que la anterior"
+        isSameOpcion: (opcionAnterior, opcionActual) => {
+            if (opcionAnterior == opcionActual) return "La opción no debe ser igual que la anterior"
             return null
         },
-        indexOfOpcion: (array, elemento) =>{
+        indexOfOpcion: (array, elemento) => {
             for (let index = 0; index < array.length; index++) {
-              if(array[index].descripcion == elemento.descripcion) return index
+                if (array[index].descripcion == elemento.descripcion) return index
             }
             return -1
         },
-        elementosArray: (array) =>{
-            if(array.length < 2) return "Debes agregar al menos dos respuestas"
+        elementosArray: (array) => {
+            if (array.length < 2) return "Debes agregar al menos dos respuestas"
             return null
         },
         isUndefined: (campo) => {
@@ -67,27 +67,29 @@ app.factory("factoryPregunta", () => {
             return valorAnterior.id == valorActual.id
         },
         isSameRespuestas: (respuestasAnteriores, respuestasActuales) => {
-            console.log("Respuestas Anteriores: ", respuestasAnteriores);
-            console.log("Respuestas actuales: ", respuestasActuales);
+
             if (respuestasAnteriores.length == respuestasActuales.length) {
                 const elementosDiferentes = respuestasActuales.filter((item) => {
                     if (!respuestasAnteriores.find((it) => it.descripcion === item.descripcion))
                         return true;
                 });
-                console.log(elementosDiferentes);
                 return !(elementosDiferentes.length > 0);
             } else {
                 return false;
             }
         },
-       indexOf: (array, elemento) =>{
-        for (let index = 0; index < array.length; index++) {
-          if(array[index].id == elemento.id) return index
-        }
-        return -1
-      }
-
-
+        indexOf: (array, elemento) => {
+            for (let index = 0; index < array.length; index++) {
+                if (array[index].id == elemento.id) return index
+            }
+            return -1
+        },
+        indexOfId: (array, id) => {
+            for (let index = 0; index < array.length; index++) {
+                if (array[index].id == id) return index
+            }
+            return -1
+        },
     }
 
     return metodos

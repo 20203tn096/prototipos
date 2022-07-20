@@ -13,7 +13,7 @@
                        <label class="label-form"> Opcion:<span class="obligatorio">
                            *</span></label>
    
-                   <input ng-model="opcionModificar.descripcion" class="form-control" ng-change="changeOpcionModificar()" />
+                   <input ng-model="opcionModificar.descripcion" class="form-control" ng-change="changeModalOpcionModificar()" />
                    <span ng-if="mapErroresOpciones.get('opcionModificar').error" class="span-error"
                    ng-bind="mapErroresOpciones.get('opcionModificar').mensaje"></span>
                    </div>
