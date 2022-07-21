@@ -392,6 +392,7 @@ app.controller("pregunta", [
                                                 $scope.mapErroresOpciones.delete('opcion')
                                                 $scope.opcionesRespuesta.push(angular.copy($scope.opcionIngresada))
                                                 $scope.opcionIngresada = {}
+                                                $scope.isAnadir = true
                                                 if (factoryPregunta.elementosArray($scope.opcionesRespuesta)) {
                                                         $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta) });
 
@@ -459,6 +460,7 @@ app.controller("pregunta", [
                                 $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta) });
                         } else {
                                 $scope.opcionIngresada = {};
+                                $scope.isAnadir = true
                                 $scope.opcionesRespuesta = [];
                                 $scope.mapErroresRegistro.delete('opciones')
                         }
@@ -639,6 +641,7 @@ app.controller("pregunta", [
                         } else {
                                 $scope.opcionIngresadaModificar = {};
                                 $scope.preguntaModificar.opcionesRespuesta = [];
+                                $scope.isAnadirModificar = true
                                 $scope.mapErroresModificacion.delete('opciones')
                         }
 
@@ -666,6 +669,7 @@ app.controller("pregunta", [
                                                 $scope.mapErroresOpcionesModificar.delete('opcion')
                                                 $scope.preguntaModificar.opcionesRespuesta.push(angular.copy($scope.opcionIngresadaModificar))
                                                 $scope.opcionIngresadaModificar = {}
+                                                $scope.isAnadirModificar = true
                                                 if (factoryPregunta.elementosArray($scope.preguntaModificar.opcionesRespuesta)) {
                                                         $scope.mapErroresModificacion.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.preguntaModificar.opcionesRespuesta) });
 

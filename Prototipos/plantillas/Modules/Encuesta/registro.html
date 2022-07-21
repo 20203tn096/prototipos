@@ -6,7 +6,7 @@
                         *</span></label>
 
                 <select ng-model="encuesta.periodo" class="form-control"
-                    ng-change="changePeriodoRegistro()"
+                    ng-change="changePeriodoRegistro(encuesta.periodo)"
                     ng-options="item as item.label for item in periodos track by item.id" required ng-required="true">
                     <option value="" disabled>SELECCIONE...</option>
                 </select>
