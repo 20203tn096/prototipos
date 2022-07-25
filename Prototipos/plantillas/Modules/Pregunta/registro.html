@@ -31,7 +31,7 @@
         </div>
     </div>
 
-     <div ng-if="pregunta.tipo.id == 2" class="form-row align-items-center " >
+     <div ng-if="pregunta.tipo.id == 2 || pregunta.tipo.id == 6" class="form-row align-items-center " >
         <div class="form-group col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-12 ">
            
             <div ng-class="mapErroresOpciones.get('opcion').error && 'has-error'">

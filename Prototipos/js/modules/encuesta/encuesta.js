@@ -387,11 +387,11 @@ app.controller("encuesta", [
         // console.log("beforeStop");
       },
       change: function () {
-        // console.log("change");
+        console.log("Hubo un cambio");
       },
       start: function (e, ui) { },
       update: function (e, ui) {
-        // console.log("update");
+        console.log("Hubo un cambio update");
       },
       stop: function (e, ui) {
         let index = ui.item.index();
@@ -405,14 +405,9 @@ app.controller("encuesta", [
     $scope.isModificar = true
 
     $scope.save = () => {
-      // let list = $scope.asignadas.map((item, i) => ({
-      //   seccion: item,
-      //   order: i,
-      //   encuesta: { id: 1 },
-      // }));
+
+      console.log("Asignadas ", $scope.asignadas);
       if (!$scope.isRegistrar) {
-
-
         SweetAlert.swal(
           {
             title: "¡Advertencia!",
@@ -426,6 +421,8 @@ app.controller("encuesta", [
           },
           function (isConfirm) {
             if (isConfirm) {
+              $scope.asignadas = factoryEncuesta.order($scope.asignadas)
+              console.log("Asignadas ", $scope.asignadas);
               const encuesta_secciones = angular.copy({
                 ...$scope.encuesta,
                 secciones: $scope.asignadas,
@@ -465,7 +462,8 @@ app.controller("encuesta", [
       }
     };
 
-    $scope.modificar = () =>{
+    $scope.modificar = () => {
+      console.log($scope.modificarEncuesta);
       if (!$scope.isModificar) {
         SweetAlert.swal(
           {
@@ -480,7 +478,7 @@ app.controller("encuesta", [
           },
           function (isConfirm) {
             if (isConfirm) {
-              $scope.listaEncuestas.splice(indexOf($scope.listaEncuestas,$scope.modificarEncuesta), 1 ,$scope.modificarEncuesta)
+              $scope.listaEncuestas.splice(indexOf($scope.listaEncuestas, $scope.modificarEncuesta), 1, $scope.modificarEncuesta)
               setTimeout(function () {
                 $("#tabConsulta").click();
               }, 100);
@@ -508,8 +506,10 @@ app.controller("encuesta", [
     }
 
     $scope.setModificarEncuesta = (encuesta) => {
-      $scope.originalEncuesta = angular.copy(encuesta)
+      $scope.originalEncuesta = angular.copy(encuesta);
+      console.log($scope.originalEncuesta.secciones);
       $scope.modificarEncuesta = angular.copy(encuesta);
+      console.log($scope.modificarEncuesta.secciones);
       $scope.listaModificar = $scope.secciones.filter((item) => {
         if (!$scope.modificarEncuesta.secciones.find((it) => it.id === item.id))
           return true;
@@ -628,7 +628,7 @@ app.controller("encuesta", [
       verificarFormularioModificar()
 
     }
-    
+
     const verificarFormulario = () => {
       $scope.isRegistrar = factoryEncuesta.validarFormulario($scope.mapErrores) ||
         factoryEncuesta.isUndefined($scope.encuesta.periodo) ||
@@ -644,11 +644,50 @@ app.controller("encuesta", [
           factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones));
     }
 
-    const indexOf = (array, elemento) =>{
+    const indexOf = (array, elemento) => {
       for (let index = 0; index < array.length; index++) {
-        if(array[index].id == elemento.id) return index
+        if (array[index].id == elemento.id) return index
       }
       return -1
     }
+
+    $scope.sortableOptionsModificar = {
+      beforeStop: function () {
+        // console.log("beforeStop");
+      },
+      change: function () {
+      },
+      start: function (e, ui) { 
+
+      },
+      update: function (e, ui) {
+        console.log("UPDATE");
+        // console.log("Sin order",  $scope.modificarEncuesta.secciones);
+        $scope.copySecciones = factoryEncuesta.order($scope.modificarEncuesta.secciones)
+
+        // console.log($scope.originalEncuesta.secciones);
+        // console.log($scope.modificarEncuesta.secciones);
+        // console.log($scope.copySecciones);
+        // console.log($scope.modificarEncuesta.secciones);
+        if (factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)) {
+
+          // for (let index = 0; index < $scope.copySecciones.length; index++) {
+          //   console.log($scope.copySecciones[index].nombre);
+
+          // }
+
+          $scope.isModificar = factoryEncuesta.isSamePosiciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)
+        }
+      },
+      stop: function (e, ui) {
+        // let index = ui.item.index();
+        // console.log("stop", index);
+
+      },
+    };
+
+
   },
+
+
 ]);

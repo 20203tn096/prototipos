@@ -31,11 +31,10 @@
                             <span ng-if="pregunta.secciones.length > 0"
                                 ng-bind="'Secciones: ' + pregunta.secciones.length" class="badge badge-utez-success"
                                 style="font-size: 12px; cursor: pointer;"
-                                ng-click="modalConsultaSecciones(encuesta.secciones)"></span>
+                                ng-click="modalConsultaSecciones(pregunta.secciones)"></span>
                             <span ng-if="pregunta.secciones == null"
                                 ng-bind="'Sin secciones'" class="badge badge-utez-success"
-                                style="font-size: 12px;"
-                                ng-click="modalConsultaSecciones(encuesta.secciones)"></span>
+                                style="font-size: 12px;"></span>
                         </td>
 
                         <td class="text-center" style="vertical-align: middle;">

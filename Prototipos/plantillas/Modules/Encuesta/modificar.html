@@ -116,7 +116,7 @@
                                 type="search" id="busquedaMatricula" /></th>
                     </tr>
                 </thead>
-                <tbody id="modificarSortable" class="ui-sortable">
+                <tbody ui-sortable="sortableOptionsModificar" ng-model="modificarEncuesta.secciones">
                     <tr ng-repeat="asignada in modificarEncuesta.secciones  | filter: buscarNombre ">
                         <td class="text-center">
                             <button class="btn btn-utez-danger table-td" ng-click="removerModificar(asignada)">

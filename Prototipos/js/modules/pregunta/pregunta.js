@@ -13,7 +13,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 1",
                                 tipo: {
                                         id: 1,
-                                        descripcion: "SiNo"
+                                        descripcion: "SI/NO"
                                 },
                                 secciones: [
                                         {
@@ -61,7 +61,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 2",
                                 tipo: {
                                         id: 1,
-                                        descripcion: "SiNo"
+                                        descripcion: "SI/NO"
                                 },
                                 secciones: [
                                         {
@@ -86,7 +86,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 3",
                                 tipo: {
                                         id: 1,
-                                        descripcion: "SiNo"
+                                        descripcion: "SI/NO"
                                 },
                                 secciones: [
                                         {
@@ -111,7 +111,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 4",
                                 tipo: {
                                         id: 1,
-                                        descripcion: "SiNo"
+                                        descripcion: "SI/NO"
                                 },
                                 secciones: [
                                         {
@@ -148,7 +148,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 5",
                                 tipo: {
                                         id: 2,
-                                        descripcion: "Multiple"
+                                        descripcion: "MÚLTIPLE"
                                 },
                                 secciones: [
                                         {
@@ -177,7 +177,17 @@ app.controller("pregunta", [
                                         }
                                 ],
                                 estado: 0,
-                                opcionesRespuesta: [],
+                                opcionesRespuesta: [
+                                        {
+                                                descripcion: "Hotel"
+                                        },
+                                        {
+                                                descripcion: "Hospedaje"
+                                        },
+                                        {
+                                                descripcion: "Alimentos"
+                                        }
+                                ],
                                 subpreguntas: []
                         },
                         {
@@ -185,7 +195,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 6",
                                 tipo: {
                                         id: 3,
-                                        descripcion: "Escala"
+                                        descripcion: "ESCALA"
                                 },
                                 secciones: [
                                         {
@@ -222,7 +232,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 7",
                                 tipo: {
                                         id: 2,
-                                        descripcion: "Multiple"
+                                        descripcion: "MÚLTIPLE"
                                 },
                                 secciones: [
                                         {
@@ -257,7 +267,7 @@ app.controller("pregunta", [
                                         }
                                 ],
                                 subpreguntas: [
-                                        
+
                                 ]
                         },
                         {
@@ -265,7 +275,7 @@ app.controller("pregunta", [
                                 enunciado: "Pregunta 8",
                                 tipo: {
                                         id: 3,
-                                        descripcion: "Escala"
+                                        descripcion: "ESCALA"
                                 },
                                 secciones: [
                                         {
@@ -333,7 +343,7 @@ app.controller("pregunta", [
                         },
                         {
                                 id: 2,
-                                descripcion: "MÚLTIPLE"
+                                descripcion: "MÚLTIPLE - LISTA"
                         },
                         {
                                 id: 3,
@@ -342,6 +352,14 @@ app.controller("pregunta", [
                         {
                                 id: 4,
                                 descripcion: "ABIERTA"
+                        },
+                        {
+                                id: 5,
+                                descripcion: "NÚMERICA"
+                        },
+                        {
+                                id: 6,
+                                descripcion: "MÚLTIPLE - OPCIÓN"
                         }
                 ]
 
@@ -444,6 +462,7 @@ app.controller("pregunta", [
                                 $scope.opcionIngresada = {};
                                 $scope.opcionesRespuesta = [];
                         }
+
                 }
 
                 $scope.changeEnunciadoRegistro = () => {
@@ -456,7 +475,7 @@ app.controller("pregunta", [
                 }
 
                 $scope.changeTipoPreguntaRegistro = () => {
-                        if ($scope.pregunta.tipo?.id == 2) {
+                        if ($scope.pregunta.tipo?.id == 2 || $scope.pregunta.tipo.id == 6) {
                                 $scope.mapErroresRegistro.set('opciones', { error: true, mensaje: factoryPregunta.elementosArray($scope.opcionesRespuesta) });
                         } else {
                                 $scope.opcionIngresada = {};
@@ -574,13 +593,13 @@ app.controller("pregunta", [
                                         },
                                         function (isConfirm) {
                                                 if (isConfirm) {
-                                                        if($scope.pregunta.idPregunta){
+                                                        if ($scope.pregunta.idPregunta) {
                                                                 const id = $scope.pregunta.idPregunta.id;
-                                                                delete $scope.pregunta.idPregunta; 
+                                                                delete $scope.pregunta.idPregunta;
                                                                 $scope.listaPreguntas[factoryPregunta.indexOfId($scope.listaPreguntas, id)].subpreguntas.push($scope.pregunta)
-                                                            
-                                                        }else{
-                                                           $scope.listaPreguntas.push({ id: $scope.listaPreguntas[$scope.listaPreguntas.length - 1].id + 1, ...$scope.pregunta, opcionesRespuesta: $scope.opcionesRespuesta, estado: 1 });
+
+                                                        } else {
+                                                                $scope.listaPreguntas.push({ id: $scope.listaPreguntas[$scope.listaPreguntas.length - 1].id + 1, ...$scope.pregunta, opcionesRespuesta: $scope.opcionesRespuesta, estado: 1 });
                                                         }
                                                         $scope.pregunta = {}
                                                         $scope.opcionIngresada = {};
@@ -853,7 +872,7 @@ app.controller("pregunta", [
                         $scope.preguntaConSubpreguntasOriginal = angular.copy(pregunta);
                 }
 
-                $scope.setEliminarSubpregunta = (subpregunta) =>{
+                $scope.setEliminarSubpregunta = (subpregunta) => {
                         SweetAlert.swal(
                                 {
                                         title: "¡Advertencia!",
@@ -867,8 +886,8 @@ app.controller("pregunta", [
                                 },
                                 function (isConfirm) {
                                         if (isConfirm) {
-                                                $scope.preguntaConSubpreguntas.subpreguntas =  $scope.preguntaConSubpreguntas.subpreguntas.filter((item) => item.id != subpregunta.id)
-                                                $scope.listaPreguntas.splice(factoryPregunta.indexOf($scope.listaPreguntas, $scope.preguntaConSubpreguntasOriginal), 1,  $scope.preguntaConSubpreguntas) 
+                                                $scope.preguntaConSubpreguntas.subpreguntas = $scope.preguntaConSubpreguntas.subpreguntas.filter((item) => item.id != subpregunta.id)
+                                                $scope.listaPreguntas.splice(factoryPregunta.indexOf($scope.listaPreguntas, $scope.preguntaConSubpreguntasOriginal), 1, $scope.preguntaConSubpreguntas)
                                                 SweetAlert.swal(
                                                         "Exitoso!",
                                                         "La subpregunta se ha eliminado exitosamente",
@@ -879,4 +898,10 @@ app.controller("pregunta", [
                         );
                 }
 
+                $scope.modalConsultaSecciones = (secciones) => {
+                        $("#modalSeccionesPregunta").modal("show");
+                        $scope.consultaSeccionesAsignadas = secciones;
+                };
+
+               
         }]);
