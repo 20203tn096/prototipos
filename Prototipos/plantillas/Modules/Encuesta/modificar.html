@@ -40,8 +40,10 @@
     </div>
 
 </div>
-<label class="label-form"> Asignación de secciones</label>
-<div class="row">
+<label class="label-form"> Asignación de secciones: </label>
+<label class="label-form">¿Quieres actualizar las secciones?</label>
+<input type="checkbox" name="" id="" ng-model="activarModificacionChx.valor" ng-value="true" ng-change="activarModificacion()">
+<div class="row" ng-show="activarModificacionChx.valor">
     <div class="col-12 col-md-6">
         <label class="sublabel-form"> Secciones:</label>
         <div class="table table-responsive">
@@ -76,9 +78,9 @@
 
                             <button class="btn " style="background-color: #b2b9ba" disabled> > </button>
                         </td>
-                        <td class="text-center table-td" ng-if="seccion.estado == 1">
+                        <td class="text-center table-td" ng-if="seccion.estado == 1" >
 
-                            <button class="btn btn-utez-success " ng-click="agregarModificar(seccion)"> > </button>
+                            <button class="btn btn-utez-success " ng-click="agregarModificar(seccion)" ng-disabled="desactivarBotonAsignar"> > </button>
                         </td>
 
                     </tr>
@@ -117,9 +119,9 @@
                     </tr>
                 </thead>
                 <tbody ui-sortable="sortableOptionsModificar" ng-model="modificarEncuesta.secciones">
-                    <tr ng-repeat="asignada in modificarEncuesta.secciones  | filter: buscarNombre ">
+                    <tr ng-repeat="asignada in modificarEncuesta.secciones | orderBy: asignada.order | filter: buscarNombre ">
                         <td class="text-center">
-                            <button class="btn btn-utez-danger table-td" ng-click="removerModificar(asignada)">
+                            <button class="btn btn-utez-danger table-td" ng-click="removerModificar(asignada)" ng-disabled="desactivarBotonAsignar">
                                 < </button>
                         </td>
                         <td ng-bind="$index + 1" class="text-center table-td">
@@ -135,9 +137,14 @@
             </table>
         </div>
     </div>
-    <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
-
-        <button class="btn btn-utez-success" ng-click="modificar()" ng-disabled="isModificar">Guardar</button>
-        <button class="btn btn-utez-danger" ng-click="cancelarModificacion()">Cancelar</button>
+   
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="text-right  col-md-4 col-md-offset-8" style="margin-bottom: 25px; margin-top: 15px;">
+    
+            <button class="btn btn-utez-success" ng-click="modificar()" ng-disabled="isModificar">Guardar</button>
+            <button class="btn btn-utez-danger" ng-click="cancelarModificacion()">Cancelar</button>
+        </div>
     </div>
 </div>

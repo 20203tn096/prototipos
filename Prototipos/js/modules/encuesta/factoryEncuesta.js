@@ -57,34 +57,25 @@ app.factory("factoryEncuesta", () => {
             }
         },
         order: (array) =>{
-            console.log("Enviado", array);
             let nuevoArray = []
             for (let index = 0; index < array.length; index++) {
                 nuevoArray.push({...array[index], order: index})
                 
             }
-            console.log("Array",nuevoArray );
             return nuevoArray;
         },
         isSamePosiciones: (seccionesAnterioes, seccionesActuales) =>{
-           
-            console.log("Id de la segunda ",seccionesActuales[1].id );
             let elementos = 0 ;
             for (let index = 0; index < seccionesActuales.length; index++) {
-                // console.log(`Seccion anterior en la posicion ${index} tiene el id ${seccionesAnterioes[index].order }`);
-                // console.log(`Seccion actual en la posicion ${index} tiene el id ${seccionesActuales[index].order }`);
-
-                if(seccionesAnterioes[index].order != seccionesActuales[index].order){
+                if(seccionesAnterioes[index].id != seccionesActuales[index].id){
                     elementos += 1
-                    return true;
+                    break;
                 }else{
                     elementos += 0
-                }
-                
+                }                
             }
-            console.log("size: ", elementos);
-            return (elementos > 0); //False = Hay elementos con posiciones diferentes / True = Todos los elementos siguen con la misma posición
-        }
+            return !(elementos > 0); //False = Hay elementos con posiciones diferentes / True = Todos los elementos siguen con la misma posición
+        },
     }
 
     return metodos

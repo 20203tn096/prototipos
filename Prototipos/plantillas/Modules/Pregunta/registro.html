@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12">
             <div ng-class="mapErroresRegistro.get('enunciado').error && 'has-error'">
                 <label class="label-form"> Enunciado:<span class="obligatorio">
                         *</span></label>
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12">
+        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
             <div ng-class="mapErroresRegistro.get('tipoPregunta').error && 'has-error'">
                 <label class="label-form"> Tipo de pregunta:<span class="obligatorio">
                         *</span></label>
@@ -29,6 +29,30 @@
                     ng-bind="mapErroresRegistro.get('tipoPregunta').mensaje" </span>
             </div>
         </div>
+
+
+        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+          <div ng-class="mapErroresRegistro.get('obligatoria').error && 'has-error' " >
+            <div class="row">
+              <div class="col-md-12">
+                <label class="label-form"> Pregunta obligatoria: <span class="obligatorio">
+                  *</span></label>
+              </div>
+              <div class="col-md-12 text-center">
+                <label>Si: </label>
+                <input type="radio" ng-value="true" name="obligatoria" ng-model="pregunta.isObligatoria" ng-change="changeObligatoriaRegistrar( )" style="margin-right: 60px;"
+              required ng-required="true" />
+    
+              <label>No: </label>
+            <input type="radio"  ng-value="false" name="obligatoria" ng-model="pregunta.isObligatoria" ng-change="changeObligatoriaRegistrar( )"
+              required ng-required="true" />
+              </div>
+            </div>
+            <span ng-if="mapErroresRegistro.get('obligatoria').error" class="span-error"
+              ng-bind="mapErroresRegistro.get('obligatoria').mensaje" </span>
+          </div>
+        </div>
+
     </div>
 
      <div ng-if="pregunta.tipo.id == 2 || pregunta.tipo.id == 6" class="form-row align-items-center " >

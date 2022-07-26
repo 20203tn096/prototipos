@@ -90,6 +90,22 @@ app.factory("factoryPregunta", () => {
             }
             return -1
         },
+        isString: (campo) =>{
+            if(typeof campo === 'string' || campo instanceof String){
+                //it is string
+                return true;    
+            }else{
+                //it is not string
+                return false;
+            }
+        },
+        validarObligatoria: (valor) =>{
+            if(valor == undefined || metodos.isString(valor)) return "Selecciona una opción"
+            return null
+        },
+        isSameObligatoria: (valorAnterior, valorActual) =>{
+            return valorAnterior == valorActual
+        }
     }
 
     return metodos

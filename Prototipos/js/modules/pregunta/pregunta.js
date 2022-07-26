@@ -54,7 +54,8 @@ app.controller("pregunta", [
                                                         descripcion: "ABIERTA"
                                                 },
                                         }
-                                ]
+                                ],
+                                isObligatoria: true
                         },
                         {
                                 id: 2,
@@ -79,7 +80,9 @@ app.controller("pregunta", [
                                 ],
                                 estado: 1,
                                 opcionesRespuesta: [],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: true
+
                         },
                         {
                                 id: 3,
@@ -104,7 +107,9 @@ app.controller("pregunta", [
                                 ],
                                 estado: 1,
                                 opcionesRespuesta: [],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: true
+
                         },
                         {
                                 id: 4,
@@ -141,7 +146,9 @@ app.controller("pregunta", [
                                 ],
                                 estado: 1,
                                 opcionesRespuesta: [],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: true
+
                         },
                         {
                                 id: 5,
@@ -188,7 +195,8 @@ app.controller("pregunta", [
                                                 descripcion: "Alimentos"
                                         }
                                 ],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: false
                         },
                         {
                                 id: 6,
@@ -225,7 +233,8 @@ app.controller("pregunta", [
                                 ],
                                 estado: 0,
                                 opcionesRespuesta: [],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: false
                         },
                         {
                                 id: 7,
@@ -268,7 +277,8 @@ app.controller("pregunta", [
                                 ],
                                 subpreguntas: [
 
-                                ]
+                                ],
+                                isObligatoria: false
                         },
                         {
                                 id: 8,
@@ -299,7 +309,8 @@ app.controller("pregunta", [
                                 ],
                                 estado: 0,
                                 opcionesRespuesta: [],
-                                subpreguntas: []
+                                subpreguntas: [],
+                                isObligatoria: false
                         }
                 ]
 
@@ -601,6 +612,7 @@ app.controller("pregunta", [
                                                         } else {
                                                                 $scope.listaPreguntas.push({ id: $scope.listaPreguntas[$scope.listaPreguntas.length - 1].id + 1, ...$scope.pregunta, opcionesRespuesta: $scope.opcionesRespuesta, estado: 1 });
                                                         }
+                                                        console.log("Pregunta", $scope.pregunta);
                                                         $scope.pregunta = {}
                                                         $scope.opcionIngresada = {};
                                                         $scope.opcionesRespuesta = []
@@ -623,6 +635,7 @@ app.controller("pregunta", [
                                                 }
                                         }
                                 );
+                                
                         } else {
                                 SweetAlert.swal(
                                         {
@@ -640,6 +653,7 @@ app.controller("pregunta", [
                         $scope.tabRegistro = false;
                         $scope.preguntaOriginalModificar = angular.copy(pregunta)
                         $scope.preguntaModificar = angular.copy(pregunta)
+                        console.log("Pregunta a modificar", $scope.preguntaModificar);
                         setTimeout(() => {
                                 $('#tabModificar').click();
                         }, 100);
@@ -800,13 +814,15 @@ app.controller("pregunta", [
                 const verificarFormulario = () => {
                         $scope.isRegistrar = factoryPregunta.validarFormulario($scope.mapErroresRegistro) ||
                                 factoryPregunta.isUndefined($scope.pregunta.enunciado) ||
-                                factoryPregunta.isUndefined($scope.pregunta.tipo)
+                                factoryPregunta.isUndefined($scope.pregunta.tipo) ||
+                                factoryPregunta.isUndefined($scope.pregunta.isObligatoria)
                 }
                 const verificarFormularioModificar = () => {
                         $scope.isModificar = factoryPregunta.validarFormulario($scope.mapErroresModificacion) ||
                                 (factoryPregunta.isSameEnunciado($scope.preguntaOriginalModificar.enunciado, $scope.preguntaModificar.enunciado) &&
                                         factoryPregunta.isSameTipo($scope.preguntaOriginalModificar.tipo, $scope.preguntaModificar.tipo) &&
-                                        factoryPregunta.isSameRespuestas($scope.preguntaOriginalModificar.opcionesRespuesta, $scope.preguntaModificar.opcionesRespuesta));
+                                        factoryPregunta.isSameRespuestas($scope.preguntaOriginalModificar.opcionesRespuesta, $scope.preguntaModificar.opcionesRespuesta) &&
+                                        factoryPregunta.isSameObligatoria($scope.preguntaOriginalModificar.isObligatoria, $scope.preguntaModificar.isObligatoria));
                 }
 
                 $scope.modificarPregunta = () => {
@@ -903,5 +919,23 @@ app.controller("pregunta", [
                         $scope.consultaSeccionesAsignadas = secciones;
                 };
 
-               
+
+                $scope.changeObligatoriaRegistrar = () => {
+                        if (factoryPregunta.validarObligatoria($scope.pregunta.isObligatoria)) {
+                                $scope.mapErroresRegistro.set('obligatoria', { error: true, mensaje: factoryPregunta.validarObligatoria($scope.pregunta.isObligatoria) })
+                        } else {
+                                $scope.mapErroresRegistro.delete('obligatoria')
+                        }
+                        verificarFormulario()
+                }
+
+                $scope.changeObligatoriaModificar = () =>{
+                        if (factoryPregunta.validarObligatoria($scope.preguntaModificar.isObligatoria)) {
+                                $scope.mapErroresModificacion.set('obligatoria', { error: true, mensaje: factoryPregunta.validarObligatoria($scope.preguntaModificar.isObligatoria) })
+                        } else {
+                                $scope.mapErroresModificacion.delete('obligatoria')
+                        }
+                        verificarFormularioModificar()
+                }
+
         }]);

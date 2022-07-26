@@ -5,6 +5,7 @@ app.controller("encuesta", [
   "SweetAlert",
   "factoryEncuesta",
   function ($scope, $http, $window, SweetAlert, factoryEncuesta) {
+    $scope.hola = {};
     $scope.periodos = [
       {
         id: 1,
@@ -35,7 +36,7 @@ app.controller("encuesta", [
       //   label: "ENERO-ABRIL | 2019 TSU",
       // },
     ];
-
+    $scope.valores = {}
     $scope.listaEncuestas = [
       {
         id: 1,
@@ -365,12 +366,16 @@ app.controller("encuesta", [
         label: "ENERO-ABRIL | 2021 INGENIERIAS",
       },
     ];
-
+    $scope.desactivarBotonAsignar = true
     $scope.listaModificar = [];
 
     $scope.bloqueoTab = true;
 
     $scope.visible = false;
+
+
+    $scope.activarModificacionChx = {
+    };
 
     $scope.encuesta = {};
 
@@ -387,26 +392,25 @@ app.controller("encuesta", [
         // console.log("beforeStop");
       },
       change: function () {
-        console.log("Hubo un cambio");
+        // console.log("Hubo un cambio");
       },
       start: function (e, ui) { },
       update: function (e, ui) {
-        console.log("Hubo un cambio update");
+        // console.log("Hubo un cambio update");
       },
       stop: function (e, ui) {
         let index = ui.item.index();
         // console.log("stop", index);
-        $scope.asignadas[index].order = index;
+        // $scope.asignadas[index].order = index;
       },
     };
 
-    $scope.isRegistrar = true
+    $scope.isRegistrar = true;
 
-    $scope.isModificar = true
+    $scope.isModificar = true;
 
     $scope.save = () => {
-
-      console.log("Asignadas ", $scope.asignadas);
+      // console.log("Asignadas ", $scope.asignadas);
       if (!$scope.isRegistrar) {
         SweetAlert.swal(
           {
@@ -421,8 +425,8 @@ app.controller("encuesta", [
           },
           function (isConfirm) {
             if (isConfirm) {
-              $scope.asignadas = factoryEncuesta.order($scope.asignadas)
-              console.log("Asignadas ", $scope.asignadas);
+              $scope.asignadas = factoryEncuesta.order($scope.asignadas);
+              // console.log("Asignadas ", $scope.asignadas);
               const encuesta_secciones = angular.copy({
                 ...$scope.encuesta,
                 secciones: $scope.asignadas,
@@ -453,17 +457,39 @@ app.controller("encuesta", [
           }
         );
       } else {
-        SweetAlert.swal(
-          {
-            title: "!Error!",
-            text: "Campos sin llenar o con errores",
-            type: "error",
-          });
+        SweetAlert.swal({
+          title: "!Error!",
+          text: "Campos sin llenar o con errores",
+          type: "error",
+        });
       }
     };
 
+    const goModificar = () => {
+      $scope.modificarEncuesta.secciones =  factoryEncuesta.order($scope.modificarEncuesta.secciones)
+      // console.log("Secciones ", $scope.modificarEncuesta.secciones );
+      $scope.listaEncuestas.splice(
+        indexOf($scope.listaEncuestas, $scope.originalEncuesta),
+        1,
+        $scope.modificarEncuesta
+      );
+      setTimeout(function () {
+        $("#tabConsulta").click();
+      }, 100);
+      $scope.modificarEncuesta = {};
+      $scope.listaModificar = angular.copy($scope.secciones);
+      $scope.isModificar = true;
+      $scope.bloqueoTab = true;
+      $scope.visible = false;
+      $scope.activarModificacionChx.valor = false
+      SweetAlert.swal(
+        "Exitoso!",
+        "La encuesta se ha actualizado exitosamente",
+        "success"
+      );
+    }
+
     $scope.modificar = () => {
-      console.log($scope.modificarEncuesta);
       if (!$scope.isModificar) {
         SweetAlert.swal(
           {
@@ -478,38 +504,38 @@ app.controller("encuesta", [
           },
           function (isConfirm) {
             if (isConfirm) {
-              $scope.listaEncuestas.splice(indexOf($scope.listaEncuestas, $scope.modificarEncuesta), 1, $scope.modificarEncuesta)
-              setTimeout(function () {
-                $("#tabConsulta").click();
-              }, 100);
-              $scope.modificarEncuesta = {};
-              $scope.listaModificar = angular.copy($scope.secciones);;
-              $scope.isModificar = true;
-              $scope.bloqueoTab = true;
-              $scope.visible = false
-              SweetAlert.swal(
-                "Exitoso!",
-                "La encuesta se ha actualizado exitosamente",
-                "success"
-              );
+              if ($scope.activarModificacionChx.valor) {
+                if (factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)) { // Verificar que los array sean iguales 
+                  if (factoryEncuesta.isSamePosiciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)) { //Verificar si los elementos tienen la misma posición
+                    SweetAlert.swal({
+                      title: "!Error!",
+                      text: "No ha realizado cambios a las secciones",
+                      type: "error",
+                    });
+                  } else {
+                    goModificar()
+                  }
+                } else { // Los elementos cambiaron por lo que se realiza la modificación
+                  goModificar()
+                }
+              } else {
+                goModificar()
+              }
             }
           }
         );
       } else {
-        SweetAlert.swal(
-          {
-            title: "!Error!",
-            text: "Campos sin modificar o campos con errores",
-            type: "error",
-          });
+        SweetAlert.swal({
+          title: "!Error!",
+          text: "Campos sin modificar o campos con errores",
+          type: "error",
+        });
       }
-    }
+    };
 
     $scope.setModificarEncuesta = (encuesta) => {
       $scope.originalEncuesta = angular.copy(encuesta);
-      console.log($scope.originalEncuesta.secciones);
       $scope.modificarEncuesta = angular.copy(encuesta);
-      console.log($scope.modificarEncuesta.secciones);
       $scope.listaModificar = $scope.secciones.filter((item) => {
         if (!$scope.modificarEncuesta.secciones.find((it) => it.id === item.id))
           return true;
@@ -523,32 +549,53 @@ app.controller("encuesta", [
 
     $scope.agregar = (seccion) => {
       if (factoryEncuesta.validarSeccion(seccion)) {
-        $scope.mapErrores.set('seccion', { error: true, mensaje: factoryEncuesta.validarSeccion(seccion) })
+        $scope.mapErrores.set("seccion", {
+          error: true,
+          mensaje: factoryEncuesta.validarSeccion(seccion),
+        });
       } else {
-        $scope.mapErrores.delete('seccion')
+        $scope.mapErrores.delete("seccion");
         $scope.asignadas.push(seccion);
         $scope.listaRegistrar.splice($scope.listaRegistrar.indexOf(seccion), 1);
       }
-      verificarFormulario()
+      verificarFormulario();
     };
 
     $scope.remover = (seccion) => {
       $scope.listaRegistrar.push(seccion);
       $scope.asignadas.splice($scope.asignadas.indexOf(seccion), 1);
-
     };
 
     $scope.agregarModificar = (seccion) => {
-      $scope.modificarEncuesta.secciones.push(seccion)
-      $scope.listaModificar.splice($scope.listaModificar.indexOf(seccion), 1);
-      verificarFormularioModificar()
+      if (!$scope.desactivarBotonAsignar) {
+        $scope.modificarEncuesta.secciones.push(seccion);
+        $scope.listaModificar.splice($scope.listaModificar.indexOf(seccion), 1);
+        verificarFormularioModificar();
+      } else {
+        SweetAlert.swal({
+          title: "!Error!",
+          text: "No has activado la modificación de secciones",
+          type: "error",
+        });
+      }
     };
 
     $scope.removerModificar = (seccion) => {
-      $scope.listaModificar.push(seccion);
-      $scope.modificarEncuesta.secciones.splice($scope.modificarEncuesta.secciones.indexOf(seccion), 1);
-      verificarFormularioModificar()
+      if (!$scope.desactivarBotonAsignar) {
+        $scope.listaModificar.push(seccion);
+        $scope.modificarEncuesta.secciones.splice(
+          $scope.modificarEncuesta.secciones.indexOf(seccion),
+          1
+        );
+      } else {
+        SweetAlert.swal({
+          title: "!Error!",
+          text: "No has activado la modificación de secciones",
+          type: "error",
+        });
+      }
 
+      verificarFormularioModificar();
     };
 
     $scope.habilitarEncuesta = (encuesta) => {
@@ -566,40 +613,52 @@ app.controller("encuesta", [
 
     $scope.changePeriodoRegistro = (e) => {
       if (factoryEncuesta.validarPeriodo($scope.encuesta.periodo)) {
-        $scope.mapErrores.set('periodo', { error: true, mensaje: factoryEncuesta.validarPeriodo($scope.encuesta.periodo) })
-        $scope.mapErrores.set('nombre', { error: true, mensaje: "Selecciona un periodo válido." })
-        $scope.encuesta.nombre = "ERROR EN EL PERIODO SELECCIONADO"
+        $scope.mapErrores.set("periodo", {
+          error: true,
+          mensaje: factoryEncuesta.validarPeriodo($scope.encuesta.periodo),
+        });
+        $scope.mapErrores.set("nombre", {
+          error: true,
+          mensaje: "Selecciona un periodo válido.",
+        });
+        $scope.encuesta.nombre = "ERROR EN EL PERIODO SELECCIONADO";
       } else {
-        $scope.mapErrores.delete('periodo');
-        $scope.mapErrores.delete('nombre')
-        $scope.encuesta.nombre = ""
+        $scope.mapErrores.delete("periodo");
+        $scope.mapErrores.delete("nombre");
+        $scope.encuesta.nombre = "";
         if (e?.label) {
           $scope.encuesta.nombre = "ENCUESTA " + e.label;
         } else {
           $scope.encuesta.nombre = "";
         }
       }
-      verificarFormulario()
+      verificarFormulario();
     };
 
     $scope.changeModificarPeriodo = (e) => {
       if (factoryEncuesta.validarPeriodo($scope.modificarEncuesta.periodo)) {
-        $scope.mapErroresModificar.set('periodo', { error: true, mensaje: factoryEncuesta.validarPeriodo($scope.modificarEncuesta.periodo) })
-        $scope.mapErroresModificar.set('nombre', { error: true, mensaje: "Selecciona un periodo válido." })
-        $scope.modificarEncuesta.nombre = "ERROR EN EL PERIODO SELECCIONADO"
-
+        $scope.mapErroresModificar.set("periodo", {
+          error: true,
+          mensaje: factoryEncuesta.validarPeriodo(
+            $scope.modificarEncuesta.periodo
+          ),
+        });
+        $scope.mapErroresModificar.set("nombre", {
+          error: true,
+          mensaje: "Selecciona un periodo válido.",
+        });
+        $scope.modificarEncuesta.nombre = "ERROR EN EL PERIODO SELECCIONADO";
       } else {
-        $scope.mapErroresModificar.delete('periodo');
-        $scope.mapErroresModificar.delete('nombre')
-        $scope.modificarEncuesta.nombre = ""
+        $scope.mapErroresModificar.delete("periodo");
+        $scope.mapErroresModificar.delete("nombre");
+        $scope.modificarEncuesta.nombre = "";
         if (e?.label) {
           $scope.modificarEncuesta.nombre = "ENCUESTA " + e.label;
         } else {
           $scope.modificarEncuesta.nombre = "";
         }
       }
-      verificarFormularioModificar()
-
+      verificarFormularioModificar();
     };
 
     $scope.cancelarModificacion = () => {
@@ -612,82 +671,133 @@ app.controller("encuesta", [
 
     $scope.changeDecripcionRegistro = () => {
       if (factoryEncuesta.validarDescripcion($scope.encuesta.descripcion)) {
-        $scope.mapErrores.set('descripcion', { error: true, mensaje: factoryEncuesta.validarDescripcion($scope.encuesta.descripcion) })
+        $scope.mapErrores.set("descripcion", {
+          error: true,
+          mensaje: factoryEncuesta.validarDescripcion(
+            $scope.encuesta.descripcion
+          ),
+        });
       } else {
-        $scope.mapErrores.delete('descripcion')
+        $scope.mapErrores.delete("descripcion");
       }
-      verificarFormulario()
-    }
+      verificarFormulario();
+    };
 
     $scope.changeModificarDescripcion = () => {
-      if (factoryEncuesta.validarDescripcion($scope.modificarEncuesta.descripcion)) {
-        $scope.mapErroresModificar.set('descripcion', { error: true, mensaje: factoryEncuesta.validarDescripcion($scope.modificarEncuesta.descripcion) })
+      if (
+        factoryEncuesta.validarDescripcion($scope.modificarEncuesta.descripcion)
+      ) {
+        $scope.mapErroresModificar.set("descripcion", {
+          error: true,
+          mensaje: factoryEncuesta.validarDescripcion(
+            $scope.modificarEncuesta.descripcion
+          ),
+        });
       } else {
-        $scope.mapErroresModificar.delete('descripcion')
+        $scope.mapErroresModificar.delete("descripcion");
       }
-      verificarFormularioModificar()
-
-    }
+      verificarFormularioModificar();
+    };
 
     const verificarFormulario = () => {
-      $scope.isRegistrar = factoryEncuesta.validarFormulario($scope.mapErrores) ||
+      $scope.isRegistrar =
+        factoryEncuesta.validarFormulario($scope.mapErrores) ||
         factoryEncuesta.isUndefined($scope.encuesta.periodo) ||
         factoryEncuesta.isUndefined($scope.encuesta.nombre) ||
         factoryEncuesta.isUndefined($scope.encuesta.descripcion);
-    }
+    };
 
     const verificarFormularioModificar = () => {
-      $scope.isModificar = factoryEncuesta.validarFormulario($scope.mapErrores) ||
-        (factoryEncuesta.isSameNombre($scope.originalEncuesta.nombre, $scope.modificarEncuesta.nombre) &&
-          factoryEncuesta.isSameDescripcion($scope.originalEncuesta.descripcion, $scope.modificarEncuesta.descripcion) &&
-          factoryEncuesta.isSamePeriodo($scope.originalEncuesta.periodo, $scope.modificarEncuesta.periodo) &&
-          factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones));
-    }
+      $scope.isModificar =
+        factoryEncuesta.validarFormulario($scope.mapErrores) ||
+        (factoryEncuesta.isSameNombre(
+          $scope.originalEncuesta.nombre,
+          $scope.modificarEncuesta.nombre
+        ) &&
+          factoryEncuesta.isSameDescripcion(
+            $scope.originalEncuesta.descripcion,
+            $scope.modificarEncuesta.descripcion
+          ) &&
+          factoryEncuesta.isSamePeriodo(
+            $scope.originalEncuesta.periodo,
+            $scope.modificarEncuesta.periodo
+          ) &&
+          factoryEncuesta.isSameSecciones(
+            $scope.originalEncuesta.secciones,
+            $scope.modificarEncuesta.secciones
+          ) && !$scope.activarModificacionChx.valor);
+    };
 
     const indexOf = (array, elemento) => {
       for (let index = 0; index < array.length; index++) {
-        if (array[index].id == elemento.id) return index
+        if (array[index].id == elemento.id) return index;
       }
-      return -1
+      return -1;
+    };
+
+    $scope.lista1 = [
+      {
+        id: 1,
+      },
+    ];
+    $scope.lista2 = [
+      {
+        id: 2,
+      },
+    ];
+
+    function arraysEqual(a1, a2) {
+      /* WARNING: arrays must not contain {objects} or behavior may be undefined */
+      return;
+    }
+
+
+
+    $scope.activarModificacion = () => {
+      if ($scope.activarModificacionChx.valor) {
+        $scope.isModificar = false
+      } else {
+        if ((factoryEncuesta.isSameNombre(
+          $scope.originalEncuesta.nombre,
+          $scope.modificarEncuesta.nombre
+        ) &&
+          factoryEncuesta.isSameDescripcion(
+            $scope.originalEncuesta.descripcion,
+            $scope.modificarEncuesta.descripcion
+          ) &&
+          factoryEncuesta.isSamePeriodo(
+            $scope.originalEncuesta.periodo,
+            $scope.modificarEncuesta.periodo
+          ) &&
+          factoryEncuesta.isSameSecciones(
+            $scope.originalEncuesta.secciones,
+            $scope.modificarEncuesta.secciones
+          ))) {
+          $scope.isModificar = true
+        }
+      }
+      $scope.desactivarBotonAsignar = !$scope.activarModificacionChx.valor;
     }
 
     $scope.sortableOptionsModificar = {
-      beforeStop: function () {
-        // console.log("beforeStop");
+      beforeStop: function (e, ui) {
+      
       },
       change: function () {
+        // console.log("Change");
       },
-      start: function (e, ui) { 
-
+      start: function (e, ui) {
+        // ui.item.startPos = ui.item.index();
+        // console.log("start");
+      }, stop: function (e, ui) {
+        // console.log("stop");
+        // console.log("STOP");
       },
       update: function (e, ui) {
-        console.log("UPDATE");
-        // console.log("Sin order",  $scope.modificarEncuesta.secciones);
-        $scope.copySecciones = factoryEncuesta.order($scope.modificarEncuesta.secciones)
-
-        // console.log($scope.originalEncuesta.secciones);
-        // console.log($scope.modificarEncuesta.secciones);
-        // console.log($scope.copySecciones);
-        // console.log($scope.modificarEncuesta.secciones);
-        if (factoryEncuesta.isSameSecciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)) {
-
-          // for (let index = 0; index < $scope.copySecciones.length; index++) {
-          //   console.log($scope.copySecciones[index].nombre);
-
-          // }
-
-          $scope.isModificar = factoryEncuesta.isSamePosiciones($scope.originalEncuesta.secciones, $scope.modificarEncuesta.secciones)
-        }
-      },
-      stop: function (e, ui) {
-        // let index = ui.item.index();
-        // console.log("stop", index);
-
-      },
+    
+      }
+      ,
     };
 
-
   },
-
-
 ]);
