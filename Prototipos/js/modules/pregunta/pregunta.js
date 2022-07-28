@@ -444,7 +444,7 @@ app.controller("pregunta", [
 
                 $scope.agregarPreguntas = (pregunta) => {
                         $scope.pregunta = {}
-                        $scope.pregunta = { ...$scope.pregunta, idPregunta: pregunta }
+                        $scope.pregunta = { ...$scope.pregunta, idPregunta: pregunta,  isObligatoria: true }
                         $scope.tabPreguntas = false;
                         setTimeout(() => {
                                 $('#tabRegistro').click();
@@ -457,6 +457,7 @@ app.controller("pregunta", [
                         $scope.opcionIngresada = {};
                         $scope.opcionesRespuesta = []
                         $scope.tabPreguntas = true;
+                        $scope.isRegistrar = true;
                         setTimeout(() => {
                                 $('#tabConsulta').click();
                         }, 100);
@@ -607,10 +608,10 @@ app.controller("pregunta", [
                                                         if ($scope.pregunta.idPregunta) {
                                                                 const id = $scope.pregunta.idPregunta.id;
                                                                 delete $scope.pregunta.idPregunta;
-                                                                $scope.listaPreguntas[factoryPregunta.indexOfId($scope.listaPreguntas, id)].subpreguntas.push($scope.pregunta)
-
+                                                                $scope.listaPreguntas[factoryPregunta.indexOfId($scope.listaPreguntas, id)].subpreguntas.push({...$scope.pregunta})
+                                                                console.log("Lista de preguntas", $scope.listaPreguntas);
                                                         } else {
-                                                                $scope.listaPreguntas.push({ id: $scope.listaPreguntas[$scope.listaPreguntas.length - 1].id + 1, ...$scope.pregunta, opcionesRespuesta: $scope.opcionesRespuesta, estado: 1 });
+                                                                $scope.listaPreguntas.push({ id: $scope.listaPreguntas[$scope.listaPreguntas.length - 1].id + 1, ...$scope.pregunta, opcionesRespuesta: $scope.opcionesRespuesta, estado: 1, subpreguntas: [] });
                                                         }
                                                         console.log("Pregunta", $scope.pregunta);
                                                         $scope.pregunta = {}

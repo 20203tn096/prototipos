@@ -1,3 +1,5 @@
+
+    <form >
 <div class="container-fluid" in-view="lineInView($index, $inview, $inviewInfo)">
     <div ng-if="pregunta.idPregunta" class="row">
         <div class="col-md-12">
@@ -5,18 +7,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12">
+        <div ng-class="!pregunta.idPregunta ? 'col-xxl-5 col-xl-5 col-lg-5 col-md-5 col-sm-12 col-xs-12' : 'col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12'">
             <div ng-class="mapErroresRegistro.get('enunciado').error && 'has-error'">
                 <label class="label-form"> Enunciado:<span class="obligatorio">
                         *</span></label>
 
-                <input ng-model="pregunta.enunciado" class="form-control" ng-change="changeEnunciadoRegistro()" />
+                <input ng-model="pregunta.enunciado" class="form-control" ng-change="changeEnunciadoRegistro()" required ng-required="true"/>
                 <span ng-if="mapErroresRegistro.get('enunciado').error" class="span-error"
                 ng-bind="mapErroresRegistro.get('enunciado').mensaje"></span>
             </div>
         </div>
 
-        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div ng-class="!pregunta.idPregunta ? 'col-xxl-4 col-xl-4 col-lg-4 col-md-4 col-sm-12 col-xs-12' : 'col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-xs-12' " >
             <div ng-class="mapErroresRegistro.get('tipoPregunta').error && 'has-error'">
                 <label class="label-form"> Tipo de pregunta:<span class="obligatorio">
                         *</span></label>
@@ -31,7 +33,7 @@
         </div>
 
 
-        <div class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
+        <div ng-if="!pregunta.idPregunta" class="col-xxl-3 col-xl-3 col-lg-3 col-md-3 col-sm-12 col-xs-12">
           <div ng-class="mapErroresRegistro.get('obligatoria').error && 'has-error' " >
             <div class="row">
               <div class="col-md-12">
@@ -55,8 +57,9 @@
 
     </div>
 
-     <div ng-if="pregunta.tipo.id == 2 || pregunta.tipo.id == 6" class="form-row align-items-center " >
-        <div class="form-group col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-12 ">
+     <div  ng-if="pregunta.tipo.id == 2 || pregunta.tipo.id == 6" class="form-row align-items-center " >
+      
+        <div  class="form-group col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sm-10 col-xs-12 ">
            
             <div ng-class="mapErroresOpciones.get('opcion').error && 'has-error'">
                 <label class="label-form"> Opción de repuesta:<span class="obligatorio">
@@ -72,6 +75,7 @@
                     <button class="btn btn-utez-success btn-sm-add btn-md-add btn-lg-add" ng-click="anadirRespuesta()" ng-disabled="isAnadir">Añadir</button>
             </div>
         </div>
+
         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-12" style="margin-top: 20px;">
             <div class="table table-responsive">
                 <table class="table table-striped table-bordered table-condensed table-hover" style="border-color: #4C535D;">
@@ -109,13 +113,14 @@
               <span class="text-justify">{{mapErroresRegistro.get('opciones').mensaje}}</span>
             </div>
         </div>
+      
      </div>
-
+    </form>
 
     <div class="row">
         <div class="text-right  col-md-4 col-sm-5 col-md-offset-8 col-sm-offset-7" style="margin-bottom: 25px; margin-top: 25px;">
 
-            <button class="btn btn-utez-success" ng-click="guardarPregunta()" ng-disabled="isRegistrar">Registrar</button>
+            <button class="btn btn-utez-success" ng-click="guardarPregunta()" ng-disabled="isRegistrar ">Registrar</button>
             <button ng-if="pregunta.idPregunta" class="btn btn-utez-danger" ng-click="cancelarRegistro()" >Cancelar</button>
         </div>
     </div>
